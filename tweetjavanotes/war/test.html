@@ -1,0 +1,221 @@
+
+        
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Effective Java Notes</title>
+<!-- Include required JS files -->
+<script type="text/javascript" src="js/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="js/syntaxhighlighter/shBrushJava.js"></script>
+<link href="js/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
+<link href="js/syntaxhighlighter/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+		
+<style type="text/css">
+
+body {
+    width: 100%; 
+    height: 100%; 
+	background:#ffffff url(../img/eclipse.png)  no-repeat;
+	background-size: 100%;	
+	background-attachment: scroll;
+	font-family: Courier New;
+	font-size: 20px;
+}
+
+	.notes{
+	 padding: 0px;
+	 margin-left: 5%;	 
+	}
+	.notesection{		
+		width: 90%;
+		float: center;		
+		margin-top:20px;
+	}
+	.notetitle{
+		 font-size: 20px;
+		 font-family: inherit;
+	 }
+	 .description{
+	 	font-family: inherit;
+	 	font-size: inherit;
+	 	border: 1px dotted grey;
+	 	white-space: pre;
+	 	word-wrap: break-word;
+	 	display: none;
+	 	
+	 }
+	 
+	 .codesample{
+	 	white-space: normal;
+	 }
+
+	p,strong,ol{
+	font-family:inherit;
+	font-size : 15px;
+	margin:5px;
+	}
+	
+	ol{
+		list-style:decimal outside;
+	}	 
+</style>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		SyntaxHighlighter.all();
+
+		$("#collapseall").click(function() {
+			//console.log("collapsing ..");
+			$('.description').fadeOut('slow');
+		});
+		
+		$("#expandall").click(function() {
+			$('.description').fadeIn('slow');
+		});		
+
+		$('[class="notelink"]').click(function() {
+			console.log(this.id);			
+			var des= "#des"+this.id;
+			$(des).fadeToggle("slow", "linear");
+			$(des).find('div').css('display', 'block');
+		});
+
+		//Auto focus based on the Note Id parameter
+				
+		var divtofocus = 0;
+		if(divtofocus > 0){
+			console.log('#des'+divtofocus);
+			$(window).scrollTop($('#des'+divtofocus).offset().top);
+		}
+			
+		
+	});
+</script>
+
+</head>
+<body>
+
+
+<div class='container' style="margin-top:15%;">
+ 
+	<div>
+		<iframe src="http://www.flipkart.com/affiliate/displayWidget?affrid=WRID-136289907574016181" 
+		style="width:120px;height:260px;float:left;" scrolling="no" marginwidth="0" marginheight="0" >
+		</iframe>
+	    This site serves as a quick reference material which i created for my everyday personal use.
+	    The information portrayed are only my understanding of the materials stated in the book and i will not responsible for the accuracy , efficacy or any damaged caused by using the tips prescribed. 
+	    <br>For Complete , in-depth information please refer <a href="http://www.flipkart.com/affiliate/displayWidget?affrid=WRID-136289907574016181">Effective Java</a>
+	    <br><br>For feedback please shoot a email to <a href="mailto:sudhakar.duraiswamy@gmail.com?Subject=Feedback">sudhakar.duraiswamy@gmail.com</a>
+
+	</div>
+		
+	<header class='row' style="margin-top:50px;">
+		<!-- 
+		<div class='span6'>
+			<h2>Effective Java Notes</h2>
+			<p>..............a Quick reference.</p>
+		</div>
+		 -->
+		<div class='' style="float:right;width:50%;margin-top:10px;">
+			<div class="btn btn-info" id="collapseall"><i class='icon-book icon-white'></i>Collapse All</div>			
+			&nbsp;&nbsp;
+			<div class="btn btn-success" id="expandall"><i class='icon-book icon-white'></i>Exapand All</div>			
+		</div>
+	</header>
+			
+	<div class="notes">
+		
+			<div class="notesection">
+				<div class="notetitle" ><a href="#" class="notelink" id="31">	Item 1: Consider static factory methods instead of constructors</a></div>							
+				<div class="description" id="des31" >
+					<p><strong>Example:</strong></p>
+<pre class="brush:java; fontsize: 100; first-line: 1; ">/**
+ * @author Sudhakar Duraiswamy
+ *
+ */
+public class Foo {
+
+	//Returns a new Instance everytime
+	public static Foo createNewFoo(){
+		return new Foo();
+	}
+	
+	
+	public static Foo singletonFoo = null;
+	//Maintains only one instance and returns the same
+	public static Foo getSingletonFoo(){
+		if(singletonFoo == null){
+			singletonFoo = new Foo();
+		}	
+		return singletonFoo;
+	}
+}
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>Advatages:</strong></p>
+<ol>
+<li>Unlike Constructors , Well-named static methods are self-explainatory&nbsp; and provide clear info on the how/what type of objects were constructed and returned.</li>
+<li>Unlike Constructors , static methods are not required to create a new instance everytime they are called.</li>
+</ol>
+<p>&nbsp;Example:</p>
+<p>&nbsp;</p>
+<pre class="brush:java; fontsize: 100; first-line: 1; ">	public static Foo singletonFoo = null;
+	//Maintains only one instance and returns the same
+	public static Foo getSingletonFoo(){
+		if(singletonFoo == null){
+			singletonFoo = new Foo();
+		}	
+		return singletonFoo;
+	}
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp;3. Unlike Constructors , they can return any SubType of their return type. More so the return type can also be decided.</p>
+<p>Example</p>
+<p>&nbsp;</p>
+<pre class="brush:java; fontsize: 100; first-line: 1; ">/**
+ * @author Sudhakar Duraiswamy
+ *
+ */
+public class Animal {
+	//Parent Class
+}
+
+//Another child class of Animal
+class Tiger extends Animal{
+	
+}
+
+//Child class of Foo
+class Lion extends Animal{
+	public Lion(){
+		//This can construct only Object of Type Bar.class
+	}
+	
+	//Returns  any sub types of Foo 
+	public static Animal createNewLion(){
+		return new Lion();
+	}	
+	//Returns  any sub types of Foo 
+	public static Animal createNewTiger(){
+		return new Tiger();
+	}	
+}
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>									
+				</div>
+			</div>
+		
+	</div>
+</body>
+</html>

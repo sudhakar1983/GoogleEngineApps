@@ -1,0 +1,13 @@
+[
+	{ "title":"Item 1: Consider static factory\n \n methods instead of constructors" , "description":"Doe","codeSample":"sample code" }
+	
+]
+[
+	{ "title":"Item 1: Consider static factory methods instead of constructors" , "description":"Doe","codeSample":"sample code" },
+	{ "title":"Item 2" , "description":"Doe","codeSample":"sample code" }
+]
+
+
+[ 
+ { "title":"Item Consider static factory methods instead of constructors","description":"Doe", "codeSample":"sample code"}
+]

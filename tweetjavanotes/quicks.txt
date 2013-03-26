@@ -1,0 +1,36 @@
+  <servlet>
+    <servlet-name>remoteapi</servlet-name>
+    <servlet-class>com.google.apphosting.utils.remoteapi.RemoteApiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>remoteapi</servlet-name>
+    <url-pattern>/remote_api</url-pattern>
+  </servlet-mapping>
+
+appcfg.py download_data  --application=twittereffectivejava --kind=Note --url=http://localhost:8888/remote_api --filename=xyz.dump
+appcfg.py upload_data --kind=Note --url=http://localhost:8888/remote_api --filename=xyz.dump
+
+username/pwd : admin/<blank>
+
+
+For Schema setting 
+*********************
+https://developers.google.com/appengine/docs/java/multitenancy/multitenancy#Creating_Namespaces_on_a_per_User_Basis
+
+
+
+
+Tips
+****
+Use kind=... to select all entities.
+
+
+
+
+
+
+appcfg.py download_data  --application=twittereffectivejava --kind=Note --url=http://localhost:8888/remote_api --filename=xyz.dump
+
+
+
+http://stackoverflow.com/questions/3699114/downloading-google-app-engine-database/12458521#12458521
