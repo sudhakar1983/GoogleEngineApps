@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.jdo.PersistenceManager;
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,7 +51,6 @@ public class NoteSetup extends HttpServlet{
 		String pp = req.getParameter("pp");
 		String title = req.getParameter("title");
 		String description = req.getParameter("description");
-		String codeSample = req.getParameter("codeSample");
 
 		if(null != pp  && "letusrock".equals(pp)){
 			
@@ -61,12 +59,7 @@ public class NoteSetup extends HttpServlet{
 				Note note = new Note();
 				note.setTitle(title);
 				note.setDescription(new Text(description));
-				if (null != codeSample && !codeSample.trim().equals("")){
-					note.setCodeSample(codeSample);
-				}
-				
 				logger.log(Level.INFO, note.toString());
-
 				
 				EntityManager em = null;
 				try {

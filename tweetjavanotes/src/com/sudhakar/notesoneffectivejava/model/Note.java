@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import com.google.appengine.api.datastore.Text;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Note.
  *
@@ -30,9 +31,7 @@ public class Note {
 	@Column
 	private Text description;	
 	
-	/** The code sample. */
-	@Column
-	private String codeSample="";
+
 
 	/**
 	 * Gets the id.
@@ -89,34 +88,14 @@ public class Note {
 		this.description = description;
 	}
 
-	/**
-	 * Gets the code sample.
-	 *
-	 * @return the code sample
-	 */
-	public String getCodeSample() {
-		return codeSample;
-	}
-
-	/**
-	 * Sets the code sample.
-	 *
-	 * @param codeSample the new code sample
-	 */
-	public void setCodeSample(String codeSample) {
-		if(null != codeSample)this.codeSample = codeSample;
-	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", title=" + title + ", description="
-				+ description + ", codeSample=" + codeSample + "]";
+				+ description + "]";
 	}
 
-
-	
 	
 }

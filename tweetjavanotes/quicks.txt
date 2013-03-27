@@ -26,10 +26,14 @@ Use kind=... to select all entities.
 
 
 
-
-
-
 appcfg.py download_data  --application=twittereffectivejava --kind=Note --url=http://localhost:8888/remote_api --filename=xyz.dump
+
+
+
+Google App Engine : tweeteffectivejava
+----------------------------------------
+appcfg update D:\Sudhakar\Calvin\workspace\my_google_apps\tweetjavanotes\war
+
 
 
 

@@ -19,6 +19,10 @@
   <servlet-name>Updatesubscribers</servlet-name>
   <servlet-class>com.sudhakar.notesoneffectivejava.UpdateTwitterSubscriberServlet</servlet-class>
  </servlet>
+ <servlet>
+  <servlet-name>editnote</servlet-name>
+  <servlet-class>com.sudhakar.notesoneffectivejava.EditNoteServlet</servlet-class>
+ </servlet>
  <servlet> 
   <servlet-name>SystemServiceServlet</servlet-name>
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
@@ -39,6 +43,11 @@
   <servlet-name>MyNotesOnEffective_Java</servlet-name>
   <url-pattern>/notes</url-pattern>
  </servlet-mapping>
+  <servlet-mapping>
+  <servlet-name>editnote</servlet-name>
+  <url-pattern>/edit</url-pattern>
+ </servlet-mapping>
+ 
  <servlet-mapping>
   <servlet-name>NotesSetup</servlet-name>
   <url-pattern>/setup</url-pattern>

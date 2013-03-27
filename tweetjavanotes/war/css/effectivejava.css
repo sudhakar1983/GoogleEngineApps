@@ -12,11 +12,13 @@ body {
 	background-attachment: scroll;
 	font-family: Courier New;
 	font-size: 20px;
+	
 }
 
 .notes {
 	padding: 0px;
 	margin-left: 5%;
+	color:#0000CC;
 }
 
 .notesection {

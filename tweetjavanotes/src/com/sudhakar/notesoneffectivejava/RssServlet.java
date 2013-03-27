@@ -80,8 +80,6 @@ public class RssServlet  extends HttpServlet {
 			description.setType("text/html");
 			description.setValue("<p>" +					
 					"<b>Notification Description</b>: <p>"+note.getDescription()+"</p>" +
-					"<b>Code Sample :</b>: "+"<code>"+ note.getCodeSample()+"</code>" +
-						
 					"</p>");
 			entry.setDescription(description);
 			
