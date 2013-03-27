@@ -42,25 +42,22 @@ public class MyNotesOnEffective_JavaServlet extends HttpServlet {
 			if(null!= noteId && !noteId.trim().equals("")){
 				try {
 					int id = Integer.parseInt(noteId);
-					req.setAttribute("noteid", id);
-					view=view+"#des"+id;
+					req.setAttribute("request_noteid", id);
+					//view=view+"#des"+id;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			em.getTransaction().commit();
-			
 			req.getRequestDispatcher(view).forward(req, resp);
 			
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			resp.setContentType("text/plain");
+			resp.getWriter().println("Something bad happened. Please shoot a mail to sudhakarbe@gmail.com");
 		}
-		
-		
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Something bad happened. Please shoot a mail to sudhakarbe@gmail.com");
 		
 	}
 }

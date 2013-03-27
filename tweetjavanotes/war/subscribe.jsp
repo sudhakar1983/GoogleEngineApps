@@ -10,26 +10,41 @@
 
 		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 		<link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+		<link type="text/css" rel="stylesheet" href="css/effectivejava.css" />
 		
 		
-		<link href="http://feeds.feedburner.com/effectivejava" rel="alternate" type="application/rss+xml" title="Subscribe to Effective Java Notes via RSS" />
-		
+		<link href="http://feeds.feedburner.com/effectivejava" rel="alternate" type="application/rss+xml" title="Subscribe to Effective Java Notes via RSS" />		
 		<title>Effective Java Notes - Everyday Health Pill for Java Developers</title>
-		
+
 	</head>
 	<body id="app" class="subscribe">
 		<div class='container'>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			<div class='row5'><div class='span12 offset5'>&nbsp;</div></div>
+			
 			<div class='row'>
 				<div class='span4'>
-					<a class='btn btn-danger' href="#"><i class='icon-arrow-left icon-white'></i> Back to Front page</a>
+					<a class='btn btn-info' href="notes"><i class='icon-arrow-left icon-white'></i> Back to Front page</a>
 				</div>
 			</div>
 			
-			<article class='hero-unit'>
+		
+			
+			<article class='hero-unit' style="background-color: white;">
 				<h1>
-					To Subscribe, Follow Us or Like Us
+					To Subscribe,Follow or Like Us
 				</h1>
-				<p>Once you've subscribed, your will receive subscriptions from next day.(either as a Twitter direct message /a Facebook Update).</p>
+				<p>Once you've subscribed, your will receive subscriptions from next day.(either as a Twitter direct message / a Facebook Update).</p>
 				<br/><br/>
 				<div class='row'>
 					<div class='span3'>
