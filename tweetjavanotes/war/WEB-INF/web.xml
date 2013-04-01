@@ -23,6 +23,11 @@
   <servlet-name>editnote</servlet-name>
   <servlet-class>com.sudhakar.notesoneffectivejava.EditNoteServlet</servlet-class>
  </servlet>
+ <servlet>
+  <servlet-name>feedbackservlet</servlet-name>
+  <servlet-class>com.sudhakar.notesoneffectivejava.FeedbackServlet</servlet-class>
+ </servlet> 
+ 
  <servlet> 
   <servlet-name>SystemServiceServlet</servlet-name>
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
@@ -43,6 +48,10 @@
   <servlet-name>MyNotesOnEffective_Java</servlet-name>
   <url-pattern>/notes</url-pattern>
  </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>feedbackservlet</servlet-name>
+  <url-pattern>/feedback</url-pattern>
+ </servlet-mapping> 
   <servlet-mapping>
   <servlet-name>editnote</servlet-name>
   <url-pattern>/edit</url-pattern>
@@ -69,6 +78,6 @@
   <url-pattern>/_ah/spi/*</url-pattern>
  </servlet-mapping>
  <welcome-file-list>
-  <welcome-file>index.html</welcome-file>
+  <welcome-file>notes</welcome-file>
  </welcome-file-list>
 </web-app>

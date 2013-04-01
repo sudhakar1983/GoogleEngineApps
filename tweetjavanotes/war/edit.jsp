@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
 	tinyMCE.init({
 		// General options
@@ -41,49 +42,15 @@
 
 	<form method="post" action="edit">
 	<input type="password" name="pp" value="letusrock"/><br/>
-	<input type="noteid" value="${note.id}" />
+	<input type="hidden" name="noteid" value="${note.id}" />
+	<input type="text" name="order" value="${note.ord}" />
 
 		Title :<input type="text" name="title" value="${note.title}"/> <br/>
 		description :<textarea rows="30" cols="80"  name="description" >${note.description.value }</textarea><br/>
-
 		<input type="submit" value="Submit" />
 	</form>
-	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			var kurals;
-			$('[type="button"]').click(function() {
-				
-				kurals = $.parseJSON($('textarea').val());
-				console.log(kurals);
-				jQuery.each(kurals, function() {
-					console.log(this );
-				});
-				
-				//upload(0);
-			});
-
-
-			function upload(index) {
-				var kural = kurals[index];
-				var pin = $('[name="pin"]').val();
-				if(kural == undefined) return;
-				console.log(kural);
-				upload(index+1);
-				
-				$.post('setup', {
-					title : kural.title,
-					description : kural.description,
-					codeSample : kural.codeSample,				
-					pp : pin
-				}, function(){
-					console.log('success');
-					//upload(index+1);
-				});
-				
-			}
-		});
-	</script>
+	
+	
 </body>
 
 </html>

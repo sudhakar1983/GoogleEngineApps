@@ -52,8 +52,9 @@ public class RssServlet  extends HttpServlet {
 		SyndFeed feed = new SyndFeedImpl();
 		feed.setFeedType("rss_2.0"); 
 		feed.setTitle("Notification"); 
-		feed.setLink("http://localhost:8888/rss");
-		feed.setDescription("Notification feed");
+		feed.setLink("http://twittereffectivejava.appspot.com/rss");
+		feed.setDescription("Effective Java Notes - Everyday Health Pill for Java Developers....");
+		feed.setAuthor("Sudhakar Duraiswamy");
 		
 		List<SyndCategory> entryCategories = new ArrayList<SyndCategory>();
 		SyndCategory category = new SyndCategoryImpl();

@@ -23,6 +23,8 @@ public class Note {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+
+	
 	/** The title. */
 	@Column
 	private String title;
@@ -31,6 +33,8 @@ public class Note {
 	@Column
 	private Text description;	
 	
+	@Column
+	private int ord;
 
 
 	/**
@@ -86,6 +90,16 @@ public class Note {
 	 */
 	public void setDescription(Text description) {
 		this.description = description;
+	}
+
+
+
+	public int getOrd() {
+		return ord;
+	}
+
+	public void setOrd(int ord) {
+		this.ord = ord;
 	}
 
 	/* (non-Javadoc)

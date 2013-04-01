@@ -33,7 +33,7 @@ public class MyNotesOnEffective_JavaServlet extends HttpServlet {
 		try {
 			em = EMF.getEntityManager();
 			em.getTransaction().begin();
-			Query q = em.createQuery("select from Note note");
+			Query q = em.createQuery("select from Note note order by note.ord");
 			@SuppressWarnings("unchecked")
 			List<Note> list = q.getResultList();
 			System.out.println("list size fetched :"+ list.size());
@@ -56,7 +56,7 @@ public class MyNotesOnEffective_JavaServlet extends HttpServlet {
 
 			e.printStackTrace();
 			resp.setContentType("text/plain");
-			resp.getWriter().println("Something bad happened. Please shoot a mail to sudhakarbe@gmail.com");
+			resp.getWriter().println("Something bad happened. Please shoot a mail to sudhakarbe@gmail.com (or) sudhakar.duraiswamy@gmail.com");
 		}
 		
 	}

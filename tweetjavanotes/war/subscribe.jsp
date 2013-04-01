@@ -8,9 +8,15 @@
 		<meta name="description" content="Effective Java Notes is a free serice that sends java tips, every day directly to your Twitter/Facebook account." />
 		<meta name="keyword" content="Effective Java,Java Tips,Java, Tips" />
 
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/jquery/jquery-ui.css" />		
+
 		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 		<link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
 		<link type="text/css" rel="stylesheet" href="css/effectivejava.css" />
+		
+
 		
 		
 		<link href="http://feeds.feedburner.com/effectivejava" rel="alternate" type="application/rss+xml" title="Subscribe to Effective Java Notes via RSS" />		
@@ -45,6 +51,8 @@
 					To Subscribe,Follow or Like Us
 				</h1>
 				<p>Once you've subscribed, your will receive subscriptions from next day.(either as a Twitter direct message / a Facebook Update).</p>
+				<br/>
+				For feedback click:<a id="feed-back"  href="#">contact Sudhakar Duraiswamy</a>
 				<br/><br/>
 				<div class='row'>
 					<div class='span3'>
@@ -65,6 +73,24 @@
 				</div>
 
 			</article>
+
+		<!-- Feedback form -->
+		<div id="dialog-form" title="Feedback Form">
+			<form method="post" action="feedback" id="feedback-form">
+				<fieldset>
+				<div id="feedbackview">
+				<p class="validateTips">All form fields are required.</p>
+					<label for="name">Name</label> 
+					<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+					<label 	for="email">Email</label>
+					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+					<label for="feedback">Feedback</label>
+					<textarea rows="15" cols="10" name="feedback" id="feedback"  class="text ui-widget-content ui-corner-all" ></textarea>
+					
+				</div>								
+				</fieldset>
+			</form>
+		</div>				
 			
 		</div>
 		
@@ -82,5 +108,6 @@
 
 
 </script>
+<script type="text/javascript" src="js/feedback.js"></script>
 	</body>
 </html>

@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +75,9 @@ public class TwitterPushServlet  extends HttpServlet {
 					
 					try {
 						System.out.println("javaNoteId :"+javaNoteId);
-						note = em.find(Note.class,javaNoteId);
+						//note = em.find(Note.class,javaNoteId);
+						Query query = em.createQuery("Select from Note note where note.ord = "+javaNoteId);
+						note = (Note) query.getSingleResult();
 					} catch (Exception e) {
 						note = null;
 						System.out.println("Note is NUll :"+note);
@@ -86,23 +89,25 @@ public class TwitterPushServlet  extends HttpServlet {
 						twitterNotes.setNextNoteId(javaNoteId);
 						em.persist(twitterNotes);
 						em.getTransaction().commit();
+						
+						//Send messages to twitter.
+						System.out.println("Note :"+note);
+						StringBuilder javatip = new StringBuilder();
+						javatip.append(note.getTitle().replace("<br>", " \n "));			
+						javatip.append("More on :"+" www.sudhakar.duraiswamy/notes?id="+note.getId());
+						javatip.append("#Effective_Java");				
+						logger.log(Level.INFO, "Jave Tip Send out "+javatip);
+						
+						twitter.updateStatus(javatip.toString());
+						for(Long id :subscriberIds){
+							twitter.sendDirectMessage(id, javatip.toString());
+						}
+						
+						resp.setContentType("text/html");
+						resp.getWriter().print("Effective Jave Tip Successfully send out to Subscribers !!.");						
 					}
 				}
-				System.out.println("Note :"+note);
-				
-				StringBuilder javatip = new StringBuilder();
-				javatip.append(note.getTitle().replace("<br>", " \n "));			
-				javatip.append("More on :"+" www.sudhakar.duraiswamy/notes?id="+note.getId());
-				javatip.append("#Effective_Java");				
-				logger.log(Level.INFO, "Jave Tip Send out "+javatip);
-				
-				twitter.updateStatus(javatip.toString());
-				for(Long id :subscriberIds){
-					twitter.sendDirectMessage(id, javatip.toString());
-				}
-				
-				resp.setContentType("text/html");
-				resp.getWriter().print("Effective Jave Tip Successfully send out to Subscribers !!.");
+
 			}catch (Exception e) {
 				e.printStackTrace();
 				logger.log(Level.INFO, "Jave Tip Sending failed!! ",e);

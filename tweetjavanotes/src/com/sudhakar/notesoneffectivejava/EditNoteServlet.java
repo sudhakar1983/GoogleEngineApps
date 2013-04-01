@@ -76,7 +76,7 @@ public class EditNoteServlet extends HttpServlet{
 			throws ServletException, IOException {
 	
 		logger.info("Post method ");
-		System.out.println("do post method - println ddd");
+		System.out.println("do post method - sudhakar");
 		
 		
 		boolean isFound = false;
@@ -85,30 +85,34 @@ public class EditNoteServlet extends HttpServlet{
 		String pp = req.getParameter("pp");
 		String noteId = req.getParameter("noteid");
 		String title = req.getParameter("title");
-		String description = req.getParameter("description");
+		String description = (null != req.getParameter("description") ? req.getParameter("description") : "");
+		String order = (null != req.getParameter("order") ? req.getParameter("order") : "1");
 
 		if(null != pp  && "letusrock".equals(pp)){
 			
-			if (null != title && !title.trim().equals("") && null != description && !description.trim().equals("")) {
+			if (null != title && !title.trim().equals("") && null != noteId && !noteId.trim().equals("")) {
 				EntityManager em = null;
 				try {
+					
 					em = EMF.getEntityManager();
 					em.getTransaction().begin();
+					System.out.println("firing query");
 					Query q = em.createQuery("select from Note note where note.id="+noteId);
 										
 					Note note = (Note) q.getSingleResult();
 					if(null != note ) isFound = true;
-					System.out.println("note found :"+note.getId());					
-					em.getTransaction().commit();
-					
-					
+					System.out.println("note found :"+note.getId());
 					
 					note.setTitle(title);
-					note.setDescription(new Text(description));					
-					em = EMF.getEntityManager();
-					em.persist(note);
+					note.setDescription(new Text(description));
+					note.setOrd(Integer.parseInt(order));
+					
 					em.getTransaction().commit();
 					
+/*					em = EMF.getEntityManager();
+					em.persist(note);
+					em.getTransaction().commit();
+*/					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

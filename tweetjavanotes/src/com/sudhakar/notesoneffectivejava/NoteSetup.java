@@ -51,6 +51,7 @@ public class NoteSetup extends HttpServlet{
 		String pp = req.getParameter("pp");
 		String title = req.getParameter("title");
 		String description = req.getParameter("description");
+		String order = (null != req.getParameter("order") ? req.getParameter("order") : "1");
 
 		if(null != pp  && "letusrock".equals(pp)){
 			
@@ -59,6 +60,7 @@ public class NoteSetup extends HttpServlet{
 				Note note = new Note();
 				note.setTitle(title);
 				note.setDescription(new Text(description));
+				note.setOrd(Integer.parseInt(order));
 				logger.log(Level.INFO, note.toString());
 				
 				EntityManager em = null;
