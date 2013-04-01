@@ -1,8 +1,6 @@
 /appengine-api-labs.jar
 /appengine-endpoints.jar
 /appengine-jsr107cache-1.7.5.jar
-/commons-lang-2.6.jar
-/commons-logging-1.1.jar
 /datanucleus-appengine-1.0.10.final.jar
 /datanucleus-core-1.1.5.jar
 /datanucleus-jpa-1.1.5.jar
