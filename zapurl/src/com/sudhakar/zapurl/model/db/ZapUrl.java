@@ -1,4 +1,4 @@
-package com.sudhakar.zapurl.model;
+package com.sudhakar.zapurl.model.db;
 
 import java.util.Date;
 

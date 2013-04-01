@@ -11,5 +11,6 @@
             <property name="datanucleus.NontransactionalWrite" value="true"/>
             <property name="datanucleus.ConnectionURL" value="appengine"/>
         </properties>
+        <class>com.sudhakar.zapurl.model.db.ZapUrl</class>
     </persistence-unit>
 </persistence>

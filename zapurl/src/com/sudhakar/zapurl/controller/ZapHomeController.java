@@ -1,46 +1,121 @@
 package com.sudhakar.zapurl.controller;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ServletContextAware;
 
-import com.sudhakar.zapurl.dao.ZapUrlDao;
-import com.sudhakar.zapurl.model.ZapUrl;
+import com.sudhakar.zapurl.model.ui.ZapUrlDto;
+import com.sudhakar.zapurl.processor.ZapProcessor;
 
 @Controller
-@RequestMapping("/zap")
-public class ZapHomeController {
+public class ZapHomeController implements ServletContextAware {
 
 	private static final Logger log = Logger.getLogger(ZapHomeController.class.getName());
-	
-	@Autowired
-	private ZapUrlDao zapUrlDao;
-	
-	@RequestMapping(value="/home" ,method=RequestMethod.GET)
-	public String home( Model model, HttpServletRequest request){
+	public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-		
+	@Autowired
+	private ZapProcessor zapProcessor;
+
+	@Autowired
+	private ZapHomeValidator homeValidator;
+
+	private ServletContext serContext;
+
+	@ModelAttribute("zapurl")
+	public ZapUrlDto getCommand() {
+		return new ZapUrlDto();
+	}
+
+	@RequestMapping(value = "/zap", method = RequestMethod.GET)
+	public String home(Model model, HttpServletRequest request) {
+
 		return "home";
 	}
-	
-	
-	@RequestMapping(value="/home" ,method=RequestMethod.POST)
-	public String zapIt( Model model, @ModelAttribute ZapUrl zapurl ,HttpServletRequest request) throws Exception{
-		
-		zapurl.setValidTill(new Date());
-		zapurl.setZappedUrl(zapurl.getUrl());
-		
-		log.info("Model :"+zapurl);
-		zapUrlDao.save(zapurl);
-		
+
+	@RequestMapping(value = "/zap", method = RequestMethod.POST)
+	public String zapIt(Model model, @ModelAttribute("zapurl") ZapUrlDto zapurl, HttpServletRequest request, BindingResult result) throws Exception {
+		log.info("Zapping the url...... " + zapurl);
+
+		homeValidator.validate(zapurl, result);
+
+		if (result.hasErrors()) {
+			log.info("has errors ");
+			model.addAttribute("zapurl", zapurl);
+			return "home";
+		}
+
+		String zappedUrl = zapProcessor.generateUniqueZapUrl();
+		zapurl.setZappedUrl(zappedUrl);
+
+		zapProcessor.save(zapurl);
+		String appUrl = serContext.getInitParameter("APP_URL");
+
+		model.addAttribute("success", true);
+		model.addAttribute("APP_URL", appUrl);
+		model.addAttribute("zapurl", zapurl);
+
 		return "home";
+	}
+
+	@RequestMapping(value = "/zap/{zapValue}", method = RequestMethod.GET)
+	public String forward(HttpServletRequest request,HttpServletResponse res, Model model, @PathVariable("zapValue") String zapValue,
+			@RequestParam(value = "p", required = false) String password, @ModelAttribute("zapurl") ZapUrlDto zapurl, Errors result)
+			throws Exception {
+		String view = "home";
+
+		log.info("zapValue :" + zapValue);
+
+		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);
+		log.info("zap :" + zap	);
+		
+		homeValidator.validateZapUrlAccess(zap, result, password);
+		System.out.println("has errors :"+result.hasErrors());
+		
+		System.out.println(" errors count :"+result.getErrorCount());
+		
+		if (!result.hasErrors()) {
+			String urlToForward = zap.getUrl();
+			view = "redirect:http://" + urlToForward;			
+
+		} else {
+			
+			model.addAttribute("errors", result.getAllErrors());
+			for(ObjectError or :result.getAllErrors() ){
+				System.out.println(or.getCodes());
+			}
+			
+			view = "error";
+		}
+		
+
+		return view;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.web.context.ServletContextAware#setServletContext
+	 * (javax.servlet.ServletContext)
+	 */
+	@Override
+	public void setServletContext(ServletContext ctx) {
+		serContext = ctx;
 	}
 }

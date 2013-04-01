@@ -2,7 +2,8 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="now" value="<%=new java.util.Date()%>" />
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
  <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
  <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
  
@@ -53,11 +54,24 @@
         </header>  
 
 
-		<form>
+<c:if test="">
+
+</c:if>
+
+<c:choose>
+	<c:when test="${not empty success && success}">
+		Url generated : ${APP_URL}${zapurl.zappedUrl}
+		
+	</c:when>
+		
+	<c:otherwise>
+<form:form method="post" commandName="zapurl">
+
 		  
 		    <div class="well" id="main">
-			    <label><strong>Paste your long  URL here</strong></label>		    
-			    <input type="text" style="width: 100%; " maxlength="1000" name="url" id="url" placeholder="http://URL.."/>			    
+			    <form:label path="url"><strong>Paste your long  URL here</strong></form:label>		    
+			    <form:input path="url"  style="width: 100%;" maxlength="1000" id="url" placeholder="http://URL.."/>	
+			    <form:errors path="url" cssClass="errorblock"></form:errors>    
 		    </div>
 		    
 		    <style>
@@ -75,7 +89,10 @@
 				}				
 				input[type="text"],input[type="password"] { 
 				    height:50px;
-				}					    		    	
+				}	
+				.errorblock{
+					color:red;
+				}				    		    	
 		    </style>		    
 		    
 		    <div class="well captcha_options" id="captcha">
@@ -85,7 +102,7 @@
 							"6LdnC98SAAAAAJ3q4yEdt3lPcM9yigZtf5B80HzQ", false);
 					out.print(c.createRecaptchaHtml(null, null));
 				%>		    
-
+				
 			    <div class="well" style="width:200px;margin-left:45%">
 			    	<button type="submit" class="btn btn-default btn-block btn-primary">Zap</button>
 			    </div>				
@@ -98,22 +115,27 @@
 			
 			<div class="well advance_options" id="advanceoptions">
 			    <label class="checkbox">
-			      <input type="checkbox" name="secure" value="true">Make it Password Protected
+			      <form:checkbox path="secure"></form:checkbox>Make it Password Protected
 			    </label>	
 			    
 			    <label>Password</label>
-			    <input type="password" style="width: 185px;" maxlength="30" name="password" id="password" />
+			    <form:password path="password" style="width: 185px;" maxlength="30"  id="password" />
+			     <form:errors path="password" cssClass="errorblock"></form:errors>    
+			    
+			    
 			    
 			    <label>Valid till</label>
-			   <input type="text" style="width: 185px;" maxlength="30" name="validtill" id="datepicker" value='<fmt:formatDate pattern="MM/dd/yyyy" value="${now}" />'/>    
+			   <form:input path="validTill" type="text" style="width: 185px;" maxlength="10" id="datepicker" />			   
+			    <form:errors path="validTill" cssClass="errorblock"></form:errors>  
 			</div>
 		    
-		    
-
-		    
-		    
 		  
-		</form>
+		</form:form>			
+	</c:otherwise>
+</c:choose>
+
+
+
   	
 		
 
