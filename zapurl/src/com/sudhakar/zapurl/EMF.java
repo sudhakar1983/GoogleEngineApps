@@ -15,7 +15,7 @@ public final class EMF {
     
     /** The Constant emfInstance. */
     private static final EntityManagerFactory emfInstance =
-        Persistence.createEntityManagerFactory("clipit_db");
+        Persistence.createEntityManagerFactory("zap_db");
 
     /**
      * Instantiates a new emf.

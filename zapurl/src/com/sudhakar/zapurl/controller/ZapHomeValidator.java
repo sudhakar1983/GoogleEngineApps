@@ -5,12 +5,14 @@ package com.sudhakar.zapurl.controller;
 
 import java.text.SimpleDateFormat;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.sudhakar.zapurl.model.ui.ZapUrlDto;
+import com.sudhakar.zapurl.processor.ZapProcessor;
 
 
 
@@ -22,6 +24,10 @@ import com.sudhakar.zapurl.model.ui.ZapUrlDto;
 public class ZapHomeValidator implements Validator{
 
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("mm/dd/yyyy");
+	
+	@Autowired
+	private ZapProcessor zapProcessor;
+
 	
 	/* (non-Javadoc)
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
@@ -41,7 +47,9 @@ public class ZapHomeValidator implements Validator{
 		
 		ValidationUtils.rejectIfEmpty(errors, "url", "url.empty");
 		ValidationUtils.rejectIfEmpty(errors, "validTill", "invalid.date");
+		ValidationUtils.rejectIfEmpty(errors, "captcha", "captcha.invalid");
 		
+	
 		
 		if(null != zap.getValidTill() && !"".equals(zap.getValidTill()))
 		try {
@@ -61,17 +69,18 @@ public class ZapHomeValidator implements Validator{
 	}
 	
 	
-	public void validateZapUrlAccess(Object obj, Errors errors,String password) {
+	public void validateZapUrlAccess(Object obj, ZapError error ,String password) {
 		ZapUrlDto zap = (ZapUrlDto) obj;
 		
 		if(null == zap ) {
-			errors.reject("zap.invalid.link", "zap.error");			
+			error.reject("zap.invalid.link");			
 					
 		}else {
+			
 			if(zap.isSecure()){
 				
 				if(!zap.getPassword().equals(password)){
-					errors.reject("zap.link.unauthorized", "zap.error");
+					error.reject("zap.link.unauthorized");
 				}
 				
 			}

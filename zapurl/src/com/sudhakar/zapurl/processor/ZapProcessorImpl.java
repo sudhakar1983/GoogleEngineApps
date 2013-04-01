@@ -3,6 +3,9 @@
  */
 package com.sudhakar.zapurl.processor;
 
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -76,10 +79,20 @@ public class ZapProcessorImpl implements ZapProcessor{
 			zapUrl.setSecure(zapDb.isSecure());
 			zapUrl.setPassword(zapDb.getPassword());
 		}
-		
-		
 		return zapUrl;
 	}
 	
-
+	
+	@Override
+	public boolean isCaptchaValid(String remoteAddr, String challenge,
+			String uresponse) throws Exception {
+			boolean isValid = false;
+			
+		   ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+		   reCaptcha.setPrivateKey("6LdnC98SAAAAAJ3q4yEdt3lPcM9yigZtf5B80HzQ");
+	       ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+	       isValid = reCaptchaResponse.isValid();
+	       return isValid;
+	}
+	
 }

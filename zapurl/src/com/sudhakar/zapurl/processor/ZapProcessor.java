@@ -16,4 +16,6 @@ public interface ZapProcessor {
 	public String generateUniqueZapUrl () throws Exception;
 	
 	public ZapUrlDto getZapUrl(String zapValue)  throws Exception;
+	
+	public boolean isCaptchaValid(String remoteAddr,String challenge,String  uresponse)  throws Exception;
 }

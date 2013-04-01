@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
  <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
  <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
  
@@ -21,6 +21,17 @@
 	<script>
 	$(function() {
 
+		$(window).load(function() {
+			$('#submitZap').click(function(){								
+				var value = $('#recaptcha_response_field').val();
+				$('#cap_hidden').val(value);
+				console.log($('#cap_hidden').val());				
+				 $(this).closest('form').submit();
+			}
+		);
+			
+			});		
+
 		$('#url').focus(function (){
 				$('#captcha').show('slow');
 			}
@@ -36,6 +47,8 @@
 				advancedDiv.fadeToggle()
 			}
 		);
+
+
 
 	});
 	</script>
@@ -95,16 +108,26 @@
 				}				    		    	
 		    </style>		    
 		    
-		    <div class="well captcha_options" id="captcha">
+		    <div class="well captcha_options" id="captcha"		
+		    
+		    <form:errors path="captcha" cssClass="errorblock">
+		    	style="display:block;"
+		    </form:errors>    
+		    >
+
+		    
+		    	<form:hidden path="captcha"  id="cap_hidden"/>
+		    	
 				<%
 					ReCaptcha c = ReCaptchaFactory.newReCaptcha(
 							"6LdnC98SAAAAAOuHfTMoV6odEDeI8pfirEfIwKId",
 							"6LdnC98SAAAAAJ3q4yEdt3lPcM9yigZtf5B80HzQ", false);
 					out.print(c.createRecaptchaHtml(null, null));
 				%>		    
+				<form:errors path="captcha" cssClass="errorblock"></form:errors>
 				
 			    <div class="well" style="width:200px;margin-left:45%">
-			    	<button type="submit" class="btn btn-default btn-block btn-primary">Zap</button>
+			    	<div id="submitZap"  class="btn btn-default btn-block btn-primary">Zap</div>
 			    </div>				
 		    </div>
 

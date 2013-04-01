@@ -13,6 +13,8 @@ public class ZapUrlDto {
 	
 	private String url;
 	
+	private String captcha;
+	
 	
 	private String zappedUrl;
 	
@@ -35,6 +37,14 @@ public class ZapUrlDto {
 
 	public String getUrl() {
 		return url;
+	}
+
+	public String getCaptcha() {
+		return captcha;
+	}
+
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 
 	public void setUrl(String url) {
@@ -75,11 +85,25 @@ public class ZapUrlDto {
 
 	@Override
 	public String toString() {
-		return "ZapUrl [id=" + id + ", url=" + url + ", zappedUrl=" + zappedUrl
-				+ ", validTill=" + validTill + ", secure=" + secure
-				+ ", password=" + password + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ZapUrlDto [id=");
+		builder.append(id);
+		builder.append(", url=");
+		builder.append(url);
+		builder.append(", captcha=");
+		builder.append(captcha);
+		builder.append(", zappedUrl=");
+		builder.append(zappedUrl);
+		builder.append(", validTill=");
+		builder.append(validTill);
+		builder.append(", secure=");
+		builder.append(secure);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append("]");
+		return builder.toString();
 	}
-	
-	
+
+
 	
 }

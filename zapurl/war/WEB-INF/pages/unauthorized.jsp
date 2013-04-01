@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
- <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
- <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
- 
+
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %> 
 <html>
 <head>
 	<title>Zap Url shortener</title>
@@ -30,16 +28,39 @@
 				 <h5 class="text-warning">...the place to zap your long urls.</h5>     
 			</div>
         </header> 
-        <c:if test="${empty errors }">
-        	<h4>This is bad ..Something terrible happened...</h4>
-        </c:if>
+
 		
 		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
-			<c:forEach items="${errors }" var="error">
-					${error } <br/>
-			</c:forEach>			
+			<h2>Not Authorized to view this link.</h2>
 		</div>
+		
+
+		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
+			<h5>You can still view the link if you have valid password to access it.</h5>
+			
+ 			<form:errors path="*" cssClass="errorblock" element="div"></form:errors>    			
+			<form:form method="post" commandName="auth" >
+				<label>Password</label>
+				<form:input path="password" />
 				
+				
+			    <div class="well captcha_options" id="captcha">
+					<%
+						ReCaptcha c = ReCaptchaFactory.newReCaptcha(
+								"6LdnC98SAAAAAOuHfTMoV6odEDeI8pfirEfIwKId",
+								"6LdnC98SAAAAAJ3q4yEdt3lPcM9yigZtf5B80HzQ", false);
+						out.print(c.createRecaptchaHtml(null, null));
+					%>		    
+					
+				    <div class="well" style="width:200px;margin-left:45%">
+				    	<button type="submit" class="btn btn-default btn-block btn-primary">Let me through</button>
+				    </div>				
+			    </div>
+					
+			</form:form>
+			
+			
+		</div>				
 
 
 

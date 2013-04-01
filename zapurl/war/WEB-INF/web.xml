@@ -7,7 +7,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<context-param>
 		<param-name>APP_URL</param-name>
-		<param-value>http://localhost:8888/zap/</param-value>
+		<param-value>http://minifyururl.appspot.com/zap/</param-value>
 	</context-param>
 	
 	<servlet>
@@ -31,6 +31,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</listener>
 	
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>zap</welcome-file>
 	</welcome-file-list>
+	
+	<session-config>
+     <tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+	
 </web-app>

@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,19 +51,45 @@ public class ZapHomeController implements ServletContextAware {
 		log.info("Zapping the url...... " + zapurl);
 
 		homeValidator.validate(zapurl, result);
+		
+		if (result.hasErrors()) {
+			log.info("has errors ");
+			model.addAttribute("result", result);
+			model.addAttribute("zapurl", zapurl);
+			return "home";
+		}		
+
+		String remoteAddr = request.getRemoteAddr();
+        String challenge = request.getParameter("recaptcha_challenge_field");
+        String uresponse = request.getParameter("recaptcha_response_field");		
+        
+        log.info("remoteAddr :" + remoteAddr);
+        log.info("challenge :" + challenge);
+        log.info("uresponse :" + uresponse);
+        
+		boolean isValid = zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
+		
+		if(!isValid){
+			result.reject("captcha.invalid", "captcha");
+		}		
 
 		if (result.hasErrors()) {
 			log.info("has errors ");
+			model.addAttribute("result", result);
 			model.addAttribute("zapurl", zapurl);
 			return "home";
 		}
+		
+		
+		
 
 		String zappedUrl = zapProcessor.generateUniqueZapUrl();
 		zapurl.setZappedUrl(zappedUrl);
 
 		zapProcessor.save(zapurl);
 		String appUrl = serContext.getInitParameter("APP_URL");
-
+		
+		model.addAttribute("result", result);
 		model.addAttribute("success", true);
 		model.addAttribute("APP_URL", appUrl);
 		model.addAttribute("zapurl", zapurl);
@@ -75,31 +99,32 @@ public class ZapHomeController implements ServletContextAware {
 
 	@RequestMapping(value = "/zap/{zapValue}", method = RequestMethod.GET)
 	public String forward(HttpServletRequest request,HttpServletResponse res, Model model, @PathVariable("zapValue") String zapValue,
-			@RequestParam(value = "p", required = false) String password, @ModelAttribute("zapurl") ZapUrlDto zapurl, Errors result)
+			@RequestParam(value = "p", required = false) String password)
 			throws Exception {
 		String view = "home";
+		ZapError errors = new ZapError();
 
 		log.info("zapValue :" + zapValue);
 
 		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);
-		log.info("zap :" + zap	);
+		log.info("zap :" + zap	);		
+		homeValidator.validateZapUrlAccess(zap, errors, password);
+
 		
-		homeValidator.validateZapUrlAccess(zap, result, password);
-		System.out.println("has errors :"+result.hasErrors());
-		
-		System.out.println(" errors count :"+result.getErrorCount());
-		
-		if (!result.hasErrors()) {
+		//redirect to unauthorized page 
+		if(null != zap && zap.isSecure()){
+			if(!zap.getPassword().equals(password)){
+				return "redirect:../authorize/"+zapValue;
+			}
+		}
+
+		if (!errors.hasErrors()) {
 			String urlToForward = zap.getUrl();
 			view = "redirect:http://" + urlToForward;			
 
 		} else {
 			
-			model.addAttribute("errors", result.getAllErrors());
-			for(ObjectError or :result.getAllErrors() ){
-				System.out.println(or.getCodes());
-			}
-			
+			model.addAttribute("errors", errors.getErrors());			
 			view = "error";
 		}
 		
