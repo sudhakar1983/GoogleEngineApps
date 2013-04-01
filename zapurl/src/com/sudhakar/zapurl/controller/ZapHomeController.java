@@ -40,16 +40,15 @@ public class ZapHomeController implements ServletContextAware {
 		return new ZapUrlDto();
 	}
 
-	@RequestMapping(value = "/zap", method = RequestMethod.GET)
+	@RequestMapping(value="/zap", method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
-
+		model.addAttribute("zapurl", new ZapUrlDto());
 		return "home";
 	}
 
-	@RequestMapping(value = "/zap", method = RequestMethod.POST)
+	@RequestMapping(value="/zap", method = RequestMethod.POST)
 	public String zapIt(Model model, @ModelAttribute("zapurl") ZapUrlDto zapurl, HttpServletRequest request, BindingResult result) throws Exception {
-		log.info("Zapping the url...... " + zapurl);
-
+		log.info("Zapping the url...... " + zapurl);		
 		homeValidator.validate(zapurl, result);
 		
 		if (result.hasErrors()) {
@@ -63,18 +62,13 @@ public class ZapHomeController implements ServletContextAware {
         String challenge = request.getParameter("recaptcha_challenge_field");
         String uresponse = request.getParameter("recaptcha_response_field");		
         
-        log.info("remoteAddr :" + remoteAddr);
-        log.info("challenge :" + challenge);
-        log.info("uresponse :" + uresponse);
-        
-		boolean isValid = zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
+        boolean isValid = zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
 		
 		if(!isValid){
 			result.reject("captcha.invalid", "captcha");
 		}		
 
-		if (result.hasErrors()) {
-			log.info("has errors ");
+		if (result.hasErrors()) {			
 			model.addAttribute("result", result);
 			model.addAttribute("zapurl", zapurl);
 			return "home";
@@ -102,14 +96,10 @@ public class ZapHomeController implements ServletContextAware {
 			@RequestParam(value = "p", required = false) String password)
 			throws Exception {
 		String view = "home";
-		ZapError errors = new ZapError();
+		ZapError errors = new ZapError();		
 
-		log.info("zapValue :" + zapValue);
-
-		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);
-		log.info("zap :" + zap	);		
+		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);		
 		homeValidator.validateZapUrlAccess(zap, errors, password);
-
 		
 		//redirect to unauthorized page 
 		if(null != zap && zap.isSecure()){

@@ -11,10 +11,11 @@
 <head>
 	<title>Zap Url shortener</title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>	
 		
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/start/jquery-ui.css" type="text/css" media="all" />		
-		
+	 
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 	
@@ -25,8 +26,8 @@
 			$('#submitZap').click(function(){								
 				var value = $('#recaptcha_response_field').val();
 				$('#cap_hidden').val(value);
-				console.log($('#cap_hidden').val());				
-				 $(this).closest('form').submit();
+				console.log($('#cap_hidden').val());	
+				$(this).closest('form').submit();
 			}
 		);
 			
@@ -44,13 +45,16 @@
 
 		$("#advanceOptionlink").click(function(){
 				var advancedDiv = 	$('#advanceoptions');			
-				advancedDiv.fadeToggle()
+				advancedDiv.fadeToggle();
 			}
 		);
 
+		$('#url').tooltip({'trigger':'focus', 'title': 'Enter url in the format wwww:example.com','placement':'bottom'});
+		$('#password').tooltip({'trigger':'focus', 'title': 'Password should be atleast 4 characters','placement':'bottom'});
 
 
 	});
+
 	</script>
 	
 	
@@ -73,17 +77,17 @@
 
 <c:choose>
 	<c:when test="${not empty success && success}">
-		Url generated : ${APP_URL}${zapurl.zappedUrl}
+		<h3>Url generated : </h3><h2><a href="${APP_URL}${zapurl.zappedUrl}" >${APP_URL}${zapurl.zappedUrl}</a></h2> 
 		
 	</c:when>
 		
 	<c:otherwise>
-<form:form method="post" commandName="zapurl">
+<form:form method="post"  name="zapform" modelAttribute="zapurl">
 
 		  
 		    <div class="well" id="main">
 			    <form:label path="url"><strong>Paste your long  URL here</strong></form:label>		    
-			    <form:input path="url"  style="width: 100%;" maxlength="1000" id="url" placeholder="http://URL.."/>	
+			    <form:input path="url"  style="width: 100%;" maxlength="1000" id="url" placeholder="www.example.com"/>	
 			    <form:errors path="url" cssClass="errorblock"></form:errors>    
 		    </div>
 		    
@@ -136,7 +140,11 @@
 			</div>			
 			
 			
-			<div class="well advance_options" id="advanceoptions">
+			<div class="well advance_options" id="advanceoptions"
+			<form:errors path="password" cssClass="errorblock">
+				style="display:block;"
+			</form:errors>      
+			>
 			    <label class="checkbox">
 			      <form:checkbox path="secure"></form:checkbox>Make it Password Protected
 			    </label>	
@@ -157,10 +165,6 @@
 	</c:otherwise>
 </c:choose>
 
-
-
-  	
-		
 
     <footer>
       <div class="container">

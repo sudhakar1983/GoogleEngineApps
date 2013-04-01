@@ -3,16 +3,16 @@
  */
 package com.sudhakar.zapurl.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.sudhakar.zapurl.model.ui.ZapUrlDto;
-import com.sudhakar.zapurl.processor.ZapProcessor;
 
 
 
@@ -23,10 +23,20 @@ import com.sudhakar.zapurl.processor.ZapProcessor;
 @Component
 public class ZapHomeValidator implements Validator{
 
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("mm/dd/yyyy");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	{
+		sdf.setLenient(false);
+	}
 	
-	@Autowired
-	private ZapProcessor zapProcessor;
+	public static void main(String[] args) throws ParseException {
+		sdf.setLenient(false);
+		String d = "59/01/1983";
+		Date dd = sdf.parse(d);
+		
+		System.out.println(dd);
+		
+	}
+
 
 	
 	/* (non-Javadoc)
@@ -51,19 +61,26 @@ public class ZapHomeValidator implements Validator{
 		
 	
 		
-		if(null != zap.getValidTill() && !"".equals(zap.getValidTill()))
-		try {
-			sdf.parse(zap.getValidTill());
-		} catch (Exception e) {
-			errors.rejectValue("validTill", "invalid.date");
+		if(null != zap.getValidTill() && !"".equals(zap.getValidTill())){
+			System.out.println("validating date");
+			try {
+				System.out.println("date passed :" +zap.getValidTill());
+				sdf.parse(zap.getValidTill());
+				System.out.println("After parsing");
+			} catch (Exception e) {
+				System.out.println("date is invalid");
+				errors.rejectValue("validTill", "invalid.date");
+			}			
 		}
+
 		
 		if (zap.isSecure()) {
-			ValidationUtils.rejectIfEmpty(errors, "password","password.invalid");
-			if ( null != zap.getPassword()
-					&& "".equals(zap.getPassword().trim())) {
-
-				errors.rejectValue("password", "password.invalid");
+			ValidationUtils.rejectIfEmpty(errors, "password","password.invalid.length");			
+			if(null != zap.getPassword() && !"".equals(zap.getPassword())){
+				if(zap.getPassword().length() <4) {
+					errors.rejectValue("password", "invalid.date");
+				}
+				
 			}
 		}
 	}

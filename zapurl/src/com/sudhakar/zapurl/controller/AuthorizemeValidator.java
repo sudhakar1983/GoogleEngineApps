@@ -21,9 +21,15 @@ public class AuthorizemeValidator implements Validator{
 		
 		if(null != auth){
 			
-			if(null == auth || "".equals(auth.getPassword().trim())){
-				errors.reject("password.invalid", "password");
+			if(null != auth && "".equals(auth.getPassword().trim())){
+				//errors.reject("password.invalid", "password");
+				errors.rejectValue("password", "password.invalid");
 			}
+
+			if(null != auth && "".equals(auth.getRecaptcha_response_field().trim())){
+				errors.rejectValue("recaptcha_response_field", "captcha.invalid");
+			}
+			
 			
 		}
 		

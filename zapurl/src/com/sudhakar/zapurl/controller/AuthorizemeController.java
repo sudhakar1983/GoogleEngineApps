@@ -1,5 +1,8 @@
 package com.sudhakar.zapurl.controller;
 
+import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,7 @@ import com.sudhakar.zapurl.processor.ZapProcessor;
 
 @Controller
 public class AuthorizemeController {
-
+	private static final Logger log = Logger.getLogger(AuthorizemeController.class.getName());
 	@Autowired
 	private AuthorizemeValidator authorizemeValidator;
 	
@@ -37,12 +40,22 @@ public class AuthorizemeController {
 
 	
 	@RequestMapping(value="authorize/{zapValue}", method=RequestMethod.POST)
-	public String authorizeme(Model model , @ModelAttribute AuthorizeMe auth, BindingResult errors ,@PathVariable String zapValue,HttpServletResponse response) throws Exception{
+	public String authorizeme(Model model , @ModelAttribute("auth") AuthorizeMe auth, BindingResult errors ,@PathVariable String zapValue,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String view="unauthorized";
 		
 		
 		authorizemeValidator.validate(auth, errors);
 		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);
+		
+		String remoteAddr = request.getRemoteAddr();
+        String challenge = request.getParameter("recaptcha_challenge_field");
+        String uresponse = request.getParameter("recaptcha_response_field");		
+                
+		boolean isValid = zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
+        
+		if(!isValid){
+			errors.reject("captcha.invalid", "captcha");
+		}	
 		
 		if(null == zap){
 			errors.reject("zap.invalid.link", "password");
@@ -52,13 +65,10 @@ public class AuthorizemeController {
 			return view;
 		}
 		
-		if(zap.getPassword().equals(auth.getPassword())){
-			response.sendRedirect("http://"+zap.getUrl());
+		if(zap.getPassword().equals(auth.getPassword())){			
+			return "redirect:http://"+zap.getUrl();
 		}
-		
-		
-		
-		System.out.println("AuthorizeMe :"+ auth);
+
 		return view;
 	}
 	

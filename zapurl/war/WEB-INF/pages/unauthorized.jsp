@@ -19,6 +19,12 @@
 	
 </head>
 
+			<style>
+			.errorblock{
+					color:red;
+					font-size: 10px;
+				}				    		    	
+		    </style>
 
 <body>
   <div class="container">
@@ -35,11 +41,11 @@
 		</div>
 		
 
+		
 		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
 			<h5>You can still view the link if you have valid password to access it.</h5>
-			
- 			<form:errors path="*" cssClass="errorblock" element="div"></form:errors>    			
-			<form:form method="post" commandName="auth" >
+			<form:form method="post" commandName="auth" >				
+				<form:errors path="*" cssClass="errorblock"></form:errors>
 				<label>Password</label>
 				<form:input path="password" />
 				
