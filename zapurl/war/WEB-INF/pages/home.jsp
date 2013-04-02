@@ -28,7 +28,7 @@
 				$('#cap_hidden').val(value);
 
 
-				var urlFormat ="^(www\.)?(?!www)[a-zA-Z0-9]+\.[a-zA-Z]{2,6}/?[a-zA-Z0-9/\._\-]+$";
+				var urlFormat ="^(?!http:)^(www\.)?(?!www)[a-zA-Z0-9]+\.[a-zA-Z]{2,6}/?[a-zA-Z0-9/\._\-]+$";
 				
 				var formValid = true;
 
@@ -42,22 +42,23 @@
 					formValid = false;					
 				}
 
+				var passwordValid = true;
 				var pwd = $('#password').val();
 				console.log('pwd :'+ pwd);
 				if($('#secure1').is(':checked') && pwd.length < 4){
-					formValid = false;	
+					passwordValid = false;	
 					$('#password').css('background-color','#FF1919');
 					$('#advanceoptions').show();				
 				}else{
-					formValid = true;	
+					passwordValid = true;	
 					$('#password').css('background-color','#ffffff');
 				}
 
 				
-				if(formValid){
+				if(formValid && passwordValid){
 					console.log('submitting')
 					$(this).closest('form').submit();
-					}
+				}
 				
 			}
 		);
