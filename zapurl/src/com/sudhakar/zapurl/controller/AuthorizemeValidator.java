@@ -38,7 +38,33 @@ public class AuthorizemeValidator implements Validator{
 		
 	}
 	
-	
+	public static void main(String[] args) {
+		
+		
+		Date today = new Date(); 
+		Calendar todayCal = Calendar.getInstance();
+		todayCal.setTime(today);
+		
+		Calendar urlCal = Calendar.getInstance();
+		urlCal.setTime(today);
+		urlCal.add(Calendar.DAY_OF_MONTH,+1);
+		
+		
+		if( !(
+				todayCal.get(Calendar.ERA) == urlCal.get(Calendar.ERA)
+	            && todayCal.get(Calendar.YEAR) == urlCal.get(Calendar.YEAR) 
+	            && todayCal.get(Calendar.DAY_OF_YEAR) == urlCal.get(Calendar.DAY_OF_YEAR)
+		)
+		
+		){
+			if(!todayCal.before(urlCal)){
+				System.out.println("expired");
+			}
+		}else{
+			System.out.println("valid");
+		}
+		
+	}
 	
 	public void validateZapUrlAccess(Object obj, ZapError error) {
 		ZapUrl zap = (ZapUrl) obj;		
@@ -51,11 +77,16 @@ public class AuthorizemeValidator implements Validator{
 		urlCal.setTime(zap.getValidTill());
 		
 		
-		if(urlCal.before(today) ){
+		if( !(
+				todayCal.get(Calendar.ERA) == urlCal.get(Calendar.ERA)
+	            && todayCal.get(Calendar.YEAR) == urlCal.get(Calendar.YEAR) 
+	            && todayCal.get(Calendar.DAY_OF_YEAR) == urlCal.get(Calendar.DAY_OF_YEAR)
+		) && !todayCal.before(urlCal)	){
 			error.reject("zap.link.expired");
-		}else if(zap.isSecure()){
+		}else{
 			error.reject("zap.link.unauthorized");
-		}
+		}		
+
 	}
 
 }

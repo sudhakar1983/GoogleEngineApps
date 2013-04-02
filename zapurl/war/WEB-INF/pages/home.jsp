@@ -28,7 +28,7 @@
 				$('#cap_hidden').val(value);
 
 
-				var urlFormat ="^(www\.)?(?!www)[a-zA-Z0-9]+\.[a-zA-Z]{2,6}/?[a-zA-Z0-9/\._]+$";
+				var urlFormat ="^(www\.)?(?!www)[a-zA-Z0-9]+\.[a-zA-Z]{2,6}/?[a-zA-Z0-9/\._\-]+$";
 				
 				var formValid = true;
 
@@ -196,7 +196,7 @@
 									<form:errors path="captcha" cssClass="text-error"></form:errors>
 									
 									<div class="well" style="width:200px;margin-left:45%">
-									 	<div id="submitZap"  class="btn btn-default btn-block btn-primary">Zap</div>
+									 	<div id="submitZap"  class="btn btn-default btn-block btn-primary">Trim</div>
 									 </div>				
 							</div>						        
 					    </div>
