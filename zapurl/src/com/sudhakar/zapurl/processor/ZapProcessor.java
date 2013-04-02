@@ -3,6 +3,7 @@
  */
 package com.sudhakar.zapurl.processor;
 
+import com.sudhakar.zapurl.model.db.ZapUrl;
 import com.sudhakar.zapurl.model.ui.ZapUrlDto;
 
 /**
@@ -16,6 +17,8 @@ public interface ZapProcessor {
 	public String generateUniqueZapUrl () throws Exception;
 	
 	public ZapUrlDto getZapUrl(String zapValue)  throws Exception;
+	
+	public ZapUrl getZap(String zapValue)  throws Exception;
 	
 	public boolean isCaptchaValid(String remoteAddr,String challenge,String  uresponse)  throws Exception;
 }

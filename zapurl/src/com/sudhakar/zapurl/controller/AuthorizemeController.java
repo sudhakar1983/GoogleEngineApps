@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sudhakar.zapurl.controller.error.UiError;
+import com.sudhakar.zapurl.controller.error.ZapError;
+import com.sudhakar.zapurl.model.db.ZapUrl;
 import com.sudhakar.zapurl.model.ui.AuthorizeMe;
 import com.sudhakar.zapurl.model.ui.ZapUrlDto;
 import com.sudhakar.zapurl.processor.ZapProcessor;
@@ -23,6 +26,8 @@ public class AuthorizemeController {
 	private static final Logger log = Logger.getLogger(AuthorizemeController.class.getName());
 	@Autowired
 	private AuthorizemeValidator authorizemeValidator;
+
+	
 	
 	@Autowired
 	private ZapProcessor zapProcessor;
@@ -32,9 +37,20 @@ public class AuthorizemeController {
 		return new AuthorizeMe();
 	}
 	
-	@RequestMapping(value="authorize/{zappedUrl}", method=RequestMethod.GET)
-	public String authorize(Model model , @ModelAttribute AuthorizeMe auth, BindingResult errors){
-		String view="unauthorized";		
+	@RequestMapping(value="authorize/{zapValue}", method=RequestMethod.GET)
+	public String authorize(Model model , @ModelAttribute AuthorizeMe auth, BindingResult errors, @PathVariable("zapValue") String zapValue) throws Exception{
+		String view="unauthorized";	
+		ZapUrl zap = zapProcessor.getZap(zapValue);		
+		ZapError zapError = new ZapError();
+		
+		authorizemeValidator.validateZapUrlAccess(zap, zapError);
+		
+		for(UiError err :zapError.getErrors()){
+			log.info(err.getValue());
+		}
+		
+		
+		model.addAttribute("zaperror", zapError);
 		return view;
 	}	
 
@@ -43,7 +59,7 @@ public class AuthorizemeController {
 	public String authorizeme(Model model , @ModelAttribute("auth") AuthorizeMe auth, BindingResult errors ,@PathVariable String zapValue,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String view="unauthorized";
 		
-		
+		//Validation
 		authorizemeValidator.validate(auth, errors);
 		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);
 		
@@ -51,10 +67,11 @@ public class AuthorizemeController {
         String challenge = request.getParameter("recaptcha_challenge_field");
         String uresponse = request.getParameter("recaptcha_response_field");		
                 
-		boolean isValid = zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
+        boolean isValid = true; 
+        if(ZapHomeController.enableCaptcha)isValid= zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
         
 		if(!isValid){
-			errors.reject("captcha.invalid", "captcha");
+			errors.rejectValue("captcha", "captcha.invalid");
 		}	
 		
 		if(null == zap){

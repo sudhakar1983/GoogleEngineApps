@@ -5,6 +5,8 @@ public class AuthorizeMe {
 	
 	private String password;
 	
+	private String captcha;
+	
 	private String recaptcha_response_field;
 
 	public String getPassword() {
@@ -21,6 +23,14 @@ public class AuthorizeMe {
 
 	public void setRecaptcha_response_field(String recaptcha_response_field) {
 		this.recaptcha_response_field = recaptcha_response_field;
+	}
+
+	public String getCaptcha() {
+		return captcha;
+	}
+
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 
 	@Override

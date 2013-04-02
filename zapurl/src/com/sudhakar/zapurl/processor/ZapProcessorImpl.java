@@ -13,6 +13,7 @@ import com.sudhakar.zapurl.RandomStringUtils;
 import com.sudhakar.zapurl.RandomStringUtils.URL_LENGTH;
 import com.sudhakar.zapurl.controller.ZapHomeController;
 import com.sudhakar.zapurl.dao.ZapUrlDao;
+import com.sudhakar.zapurl.model.db.ZapUrl;
 import com.sudhakar.zapurl.model.ui.ZapUrlDto;
 
 /**
@@ -36,13 +37,12 @@ public class ZapProcessorImpl implements ZapProcessor{
 		zapDb.setValidTill(ZapHomeController.sdf.parse(zapurl.getValidTill() ));
 		zapDb.setZappedUrl(zapurl.getZappedUrl());
 		zapDb.setSecure(zapurl.isSecure());
-		zapDb.setPassword(zapurl.getPassword());
-		
-		
-		
+		zapDb.setPassword(zapurl.getPassword());		
 		zapUrlDao.save(zapDb);
 		
 	}
+
+	
 	/* (non-Javadoc)
 	 * @see com.sudhakar.zapurl.processor.ZapProcessor#generateUniqueZapUrl()
 	 */
@@ -84,6 +84,13 @@ public class ZapProcessorImpl implements ZapProcessor{
 	
 	
 	@Override
+	public ZapUrl getZap(String zapValue) throws Exception {
+		com.sudhakar.zapurl.model.db.ZapUrl zapDb = zapUrlDao.getLink(zapValue);
+		return zapDb;
+	}	
+	
+	
+	@Override
 	public boolean isCaptchaValid(String remoteAddr, String challenge,
 			String uresponse) throws Exception {
 			boolean isValid = false;
@@ -94,5 +101,6 @@ public class ZapProcessorImpl implements ZapProcessor{
 	       isValid = reCaptchaResponse.isValid();
 	       return isValid;
 	}
+
 	
 }

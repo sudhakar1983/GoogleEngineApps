@@ -7,7 +7,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<context-param>
 		<param-name>APP_URL</param-name>
-		<param-value>http://minifyururl.appspot.com/</param-value>
+		<param-value>http://minifyururl.appspot.com/zap/</param-value>
 	</context-param>
 	
 	<servlet>

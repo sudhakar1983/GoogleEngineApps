@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletContextAware;
 
+import com.sudhakar.zapurl.controller.error.ZapError;
+import com.sudhakar.zapurl.model.db.ZapUrl;
 import com.sudhakar.zapurl.model.ui.ZapUrlDto;
 import com.sudhakar.zapurl.processor.ZapProcessor;
 
@@ -26,6 +28,8 @@ public class ZapHomeController implements ServletContextAware {
 
 	private static final Logger log = Logger.getLogger(ZapHomeController.class.getName());
 	public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	
+	public static final boolean enableCaptcha = true;
 
 	@Autowired
 	private ZapProcessor zapProcessor;
@@ -62,7 +66,8 @@ public class ZapHomeController implements ServletContextAware {
         String challenge = request.getParameter("recaptcha_challenge_field");
         String uresponse = request.getParameter("recaptcha_response_field");		
         
-        boolean isValid = zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
+        boolean isValid = true; 
+        if(enableCaptcha)isValid= zapProcessor.isCaptchaValid(remoteAddr, challenge, uresponse);
 		
 		if(!isValid){
 			result.reject("captcha.invalid", "captcha");
@@ -95,26 +100,25 @@ public class ZapHomeController implements ServletContextAware {
 	public String forward(HttpServletRequest request,HttpServletResponse res, Model model, @PathVariable("zapValue") String zapValue,
 			@RequestParam(value = "p", required = false) String password)
 			throws Exception {
+		
 		String view = "home";
 		ZapError errors = new ZapError();		
 
-		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);		
+		//ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);
+		ZapUrl zap = zapProcessor.getZap(zapValue);
 		homeValidator.validateZapUrlAccess(zap, errors, password);
-		
+
 		//redirect to unauthorized page 
 		if(null != zap && zap.isSecure()){
 			if(!zap.getPassword().equals(password)){
 				return "redirect:../authorize/"+zapValue;
 			}
-		}
-
-		if (!errors.hasErrors()) {
+		}else if (!errors.hasErrors()) {
 			String urlToForward = zap.getUrl();
 			view = "redirect:http://" + urlToForward;			
 
-		} else {
-			
-			model.addAttribute("errors", errors.getErrors());			
+		} else {			
+			model.addAttribute("zaperror", errors);			
 			view = "error";
 		}
 		

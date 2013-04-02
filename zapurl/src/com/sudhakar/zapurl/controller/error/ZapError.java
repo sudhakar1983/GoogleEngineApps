@@ -1,4 +1,4 @@
-package com.sudhakar.zapurl.controller;
+package com.sudhakar.zapurl.controller.error;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.sudhakar.zapurl.processor.PropertyLoader;
 public class ZapError {
 	
 	/** The errors. */
-	private List<String> errors = new ArrayList<String>();
+	private List<UiError> errors = new ArrayList<UiError>();
 	
 	/**
 	 * Adds the error.
@@ -21,7 +21,7 @@ public class ZapError {
 	 * @param error the error
 	 */
 	public void addError(String error){
-		if(null != error & !"".equals(error)) errors.add(error);
+		if(null != error & !"".equals(error)) errors.add(new UiError(null,error));
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class ZapError {
 	 *
 	 * @return the errors
 	 */
-	public List<String> getErrors() {
+	public List<UiError> getErrors() {
 		return errors;
 	}
 
@@ -39,7 +39,11 @@ public class ZapError {
 	 * @param errors the new errors
 	 */
 	public void setErrors(List<String> errors) {
-		this.errors.addAll( errors );
+		for(String value: errors){
+			this.errors.add(new UiError(null,value));
+		}
+		
+
 	}
 
 	/**
@@ -59,7 +63,10 @@ public class ZapError {
 	 */
 	public void reject(String code) {
 		String errorValue = PropertyLoader.getProperty(code);		
-		if(null != errorValue )this.errors.add(errorValue);
+		System.out.println(code+":"+errorValue);
+		if(null != errorValue ){
+			this.errors.add(new UiError(code,errorValue));
+		}
 		else throw new RuntimeException("Error code not found");
 	}
 	
@@ -71,8 +78,11 @@ public class ZapError {
 	 */
 	public void reject(String code,String defaultMessage){
 		String errorValue = PropertyLoader.getProperty(code);
-		if(null != errorValue )this.errors.add(errorValue);
-		else this.errors.add(defaultMessage);
+		if(null != errorValue ){
+			this.errors.add(new UiError(code,errorValue));
+		}else{
+			this.errors.add(new UiError(code,defaultMessage));
+		}
 	}	
 	
 }

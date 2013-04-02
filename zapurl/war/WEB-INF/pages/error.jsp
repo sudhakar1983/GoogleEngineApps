@@ -30,14 +30,16 @@
 				 <h5 class="text-warning">...the place to zap your long urls.</h5>     
 			</div>
         </header> 
-        <c:if test="${empty errors }">
-        	<h4>This is bad ..Something terrible happened...</h4>
+        <c:if test="${empty zaperror }">
+        	<h4 class="text-info">This is bad ..Something terrible happened...</h4>
         </c:if>
 		
 		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
-			<c:forEach items="${errors }" var="error">
-					${error } <br/>
-			</c:forEach>			
+			<c:if test="${not empty zaperror}">			
+				<c:forEach items="${zaperror.errors}" var="err">
+					<p class="text-info">${err.value}</p>
+				</c:forEach>
+			</c:if>		
 		</div>
 				
 

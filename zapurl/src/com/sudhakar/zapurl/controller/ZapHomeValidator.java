@@ -5,6 +5,7 @@ package com.sudhakar.zapurl.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -12,6 +13,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import com.sudhakar.zapurl.controller.error.ZapError;
+import com.sudhakar.zapurl.model.db.ZapUrl;
 import com.sudhakar.zapurl.model.ui.ZapUrlDto;
 
 
@@ -61,14 +64,10 @@ public class ZapHomeValidator implements Validator{
 		
 	
 		
-		if(null != zap.getValidTill() && !"".equals(zap.getValidTill())){
-			System.out.println("validating date");
-			try {
-				System.out.println("date passed :" +zap.getValidTill());
-				sdf.parse(zap.getValidTill());
-				System.out.println("After parsing");
-			} catch (Exception e) {
-				System.out.println("date is invalid");
+		if(null != zap.getValidTill() && !"".equals(zap.getValidTill())){			
+			try {				
+				sdf.parse(zap.getValidTill());				
+			} catch (Exception e) {				
 				errors.rejectValue("validTill", "invalid.date");
 			}			
 		}
@@ -85,21 +84,27 @@ public class ZapHomeValidator implements Validator{
 		}
 	}
 	
+
+	
 	
 	public void validateZapUrlAccess(Object obj, ZapError error ,String password) {
-		ZapUrlDto zap = (ZapUrlDto) obj;
 		
+		ZapUrl zap = (ZapUrl) obj;		
 		if(null == zap ) {
-			error.reject("zap.invalid.link");			
+			error.reject("zap.invalid.link");		
 					
-		}else {
+		}
+
+		if(null != zap ) {
+			Date today = new Date(); 
+			Calendar todayCal = Calendar.getInstance();
+			todayCal.setTime(today);
 			
-			if(zap.isSecure()){
-				
-				if(!zap.getPassword().equals(password)){
-					error.reject("zap.link.unauthorized");
-				}
-				
+			Calendar urlCal = Calendar.getInstance();
+			urlCal.setTime(zap.getValidTill());			
+			
+			if(!urlCal.after(today) ){
+				error.reject("zap.link.expired");
 			}
 		}
 		

@@ -16,58 +16,144 @@
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 	
+	<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('#submitZap').click(function(){								
+				var value = $('#recaptcha_response_field').val();
+				$('#cap_hidden').val(value);
+				console.log($('#cap_hidden').val());	
+				$(this).closest('form').submit();
+			}
+		);		
+	
+	});	
+	</script>
 	
 </head>
+	
+<style>
+	.captcha_options{
+		display:none;
+	}
+	.advance_options{
+		display:none;
+	}	
+	.makemelink{
+		color:#005580;
+		text-decoration:underline;
+		cursor: hand;
+		cursor: pointer; 
+	}				
+	input[type="text"],input[type="password"] { 
+	    height:50px;
+	    color:black;
+	    font-weight: 900px;
+	    font-size: 20px;
+	}	
+	.text-error{
+		color:red;
+	}
+					
+	html,
+	body {
+	    height: 100%;
+	}
+	 
+	#wrap  {
+	    min-height: 100%;
+	    height: auto !important;
+	    height: 100%;
+	    margin: 0 auto -60px;
+	}
+	
+	.hero-unit {
+		background-color :#ffffff;
+	}
+	
+	.well{
+		background-color :#D6EBFF;
+	}				
+	
+	#advanceoptions{
+		background-color :#FFCC99;
+	}   
+	.text-warning{
+		color :#FF6600;
+	}
+</style>		
 
-			<style>
-			.errorblock{
-					color:red;
-					font-size: 10px;
-				}				    		    	
-		    </style>
+<style>				
+.captcha{
+	float:center;
+	width:60%;
+	margin-left: 300px;
+}			    		    	
+</style>
 
 <body>
+<div id="wrap">
   <div class="container">
         <header class="hero-unit">
-			<h1>Welcome to ZAP url shortener</h1>
-			<div class="span5 offset3">
-				 <h5 class="text-warning">...the place to zap your long urls.</h5>     
+			<h1>TrimUrl</h1>
+			<div class="span5 offset1">
+				 <h5 class="text-warning">...the place to shorten your long urls.</h5>     
 			</div>
-        </header> 
+        </header>  
+			
 
 		
 		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
-			<h2>Not Authorized to view this link.</h2>
+			
+				<c:forEach items="${zaperror.errors}" var="err">
+					<p class="text-info">${err.value}</p>
+					<!-- <h4 class="text-info">This is bad ..Something terrible happened...</h4> -->
+				</c:forEach>
+			
+			
 		</div>
-		
+	
+<c:set var="contains" value="false" />
+<c:forEach items="${zaperror.errors}" var="err">
+<c:if test="${err.code =='zap.link.expired'}">
+    <c:set var="contains" value="true" />
+  </c:if>	
+</c:forEach>		
+<c:if test="${!contains}">
 
 		
 		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
-			<h5>You can still view the link if you have valid password to access it.</h5>
-			<form:form method="post" commandName="auth" >				
-				<form:errors path="*" cssClass="errorblock"></form:errors>
-				<label>Password</label>
-				<form:input path="password" />
+			<h5>
+				<p class="text-info">
+					You can still view the link if you have valid password to access it.
+				</p>
+			</h5>
+			<form:form method="post" commandName="auth" >
+				<label>Password</label>				
+				<form:password path="password"/>
+				<br/>
+				<form:errors path="password" cssClass="errorblock"></form:errors>
 				
 				
-			    <div class="well captcha_options" id="captcha">
+			    <div class="well captcha_options" id="captcha" style="display: block;">
+			    <form:hidden path="captcha"  id="cap_hidden"/>
+			    	<div class="captcha">
 					<%
 						ReCaptcha c = ReCaptchaFactory.newReCaptcha(
 								"6LdnC98SAAAAAOuHfTMoV6odEDeI8pfirEfIwKId",
 								"6LdnC98SAAAAAJ3q4yEdt3lPcM9yigZtf5B80HzQ", false);
 						out.print(c.createRecaptchaHtml(null, null));
-					%>		    
-					
-				    <div class="well" style="width:200px;margin-left:45%">
-				    	<button type="submit" class="btn btn-default btn-block btn-primary">Let me through</button>
-				    </div>				
+					%>
+					</div>
+					<form:errors path="captcha" cssClass="errorblock"></form:errors>
+					<br/>
+					<br/>
+				    <div id="submitZap"  class="btn btn-default  btn-primary">Let me through</div>				    				
 			    </div>
-					
 			</form:form>
-			
-			
-		</div>				
-
+		</div>		
+</c:if>		
+</div>
 
 
   	
