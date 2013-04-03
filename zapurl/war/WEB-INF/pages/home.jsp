@@ -17,7 +17,8 @@
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/start/jquery-ui.css" type="text/css" media="all" />		
 	 
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+	<link href='<c:url value="../css/trimurl.css"></c:url>'  rel="stylesheet" />
 	
 	<script>
 	$(function() {
@@ -88,58 +89,7 @@
 	});
 
 	</script>
-	
-<style>
-	.captcha_options{
-		display:none;
-	}
-	.advance_options{
-		display:none;
-	}	
-	.makemelink{
-		color:#005580;
-		text-decoration:underline;
-		cursor: hand;
-		cursor: pointer; 
-	}				
-	input[type="text"],input[type="password"] { 
-	    height:50px;
-	    color:black;
-	    font-weight: 900px;
-	    font-size: 20px;
-	}	
-	.text-error{
-		color:red;
-	}
-					
-	html,
-	body {
-	    height: 100%;
-	}
-	 
-	#wrap  {
-	    min-height: 100%;
-	    height: auto !important;
-	    height: 100%;
-	    margin: 0 auto -60px;
-	}
-	
-	.hero-unit {
-		background-color :#ffffff;
-	}
-	
-	.well{
-		background-color :#D6EBFF;
-	}				
-	
-	#advanceoptions{
-		background-color :#FFCC99;
-	}   
-	.text-warning{
-		color :#FF6600;
-	}
-</style>		    
-		    	
+ 	
 	
 </head>
 

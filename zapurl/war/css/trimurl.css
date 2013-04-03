@@ -1,0 +1,50 @@
+	.captcha_options{
+		display:none;
+	}
+	.advance_options{
+		display:none;
+	}	
+	.makemelink{
+		color:#005580;
+		text-decoration:underline;
+		cursor: hand;
+		cursor: pointer; 
+	}				
+	input[type="text"],input[type="password"] { 
+	    height:50px;
+	    color:black;
+	    font-weight: 900px;
+	    font-size: 20px;
+	}	
+	.text-error{
+		color:red;
+		font-size: 15px;
+		font-weight: normal;
+	}
+					
+	html,
+	body {
+	    height: 100%;
+	}
+	 
+	#wrap  {
+	    min-height: 100%;
+	    height: auto !important;
+	    height: 100%;
+	    margin: 0 auto -60px;
+	}
+	
+	.hero-unit {
+		background-color :#ffffff;
+	}
+	
+	.well{
+		background-color :#D6EBFF;
+	}				
+	
+	#advanceoptions{
+		background-color :#FFCC99;
+	}   
+	.text-warning{
+		color :#FF6600;
+	}

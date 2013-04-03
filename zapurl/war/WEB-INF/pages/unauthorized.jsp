@@ -15,6 +15,7 @@
 		
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+	<link href='<c:url value="../css/trimurl.css"></c:url>'  rel="stylesheet" />
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
@@ -32,56 +33,7 @@
 	
 </head>
 	
-<style>
-	.captcha_options{
-		display:none;
-	}
-	.advance_options{
-		display:none;
-	}	
-	.makemelink{
-		color:#005580;
-		text-decoration:underline;
-		cursor: hand;
-		cursor: pointer; 
-	}				
-	input[type="text"],input[type="password"] { 
-	    height:50px;
-	    color:black;
-	    font-weight: 900px;
-	    font-size: 20px;
-	}	
-	.text-error{
-		color:red;
-	}
-					
-	html,
-	body {
-	    height: 100%;
-	}
-	 
-	#wrap  {
-	    min-height: 100%;
-	    height: auto !important;
-	    height: 100%;
-	    margin: 0 auto -60px;
-	}
-	
-	.hero-unit {
-		background-color :#ffffff;
-	}
-	
-	.well{
-		background-color :#D6EBFF;
-	}				
-	
-	#advanceoptions{
-		background-color :#FFCC99;
-	}   
-	.text-warning{
-		color :#FF6600;
-	}
-</style>		
+		
 
 <style>				
 .captcha{
@@ -102,16 +54,14 @@
         </header>  
 			
 
-		
+		<c:if test="${not empty zaperror.errors }">
 		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
-			
 				<c:forEach items="${zaperror.errors}" var="err">
 					<p class="text-info">${err.value}</p>
 					<!-- <h4 class="text-info">This is bad ..Something terrible happened...</h4> -->
 				</c:forEach>
-			
-			
 		</div>
+		</c:if>
 	
 <c:set var="contains" value="false" />
 <c:forEach items="${zaperror.errors}" var="err">
@@ -132,7 +82,7 @@
 				<label>Password</label>				
 				<form:password path="password"/>
 				<br/>
-				<form:errors path="password" cssClass="errorblock"></form:errors>
+				<form:errors path="password" cssClass="text-error"></form:errors>
 				
 				
 			    <div class="well captcha_options" id="captcha" style="display: block;">
@@ -145,7 +95,7 @@
 						out.print(c.createRecaptchaHtml(null, null));
 					%>
 					</div>
-					<form:errors path="captcha" cssClass="errorblock"></form:errors>
+					<form:errors path="captcha" cssClass="text-error"></form:errors>
 					<br/>
 					<br/>
 				    <div id="submitZap"  class="btn btn-default  btn-primary">Let me through</div>				    				

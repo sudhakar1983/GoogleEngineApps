@@ -63,6 +63,10 @@ public class AuthorizemeController {
 		authorizemeValidator.validate(auth, errors);
 		ZapUrlDto zap = zapProcessor.getZapUrl(zapValue);
 		
+		if(errors.hasErrors()){
+			return view;
+		}
+		
 		String remoteAddr = request.getRemoteAddr();
         String challenge = request.getParameter("recaptcha_challenge_field");
         String uresponse = request.getParameter("recaptcha_response_field");		
