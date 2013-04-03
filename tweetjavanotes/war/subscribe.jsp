@@ -71,8 +71,12 @@
 						<p><a href="http://feeds.feedburner.com/effectivejava">Subscribe via RSS feed</a> so that you'll get notified in your favorite feed reader when we publish Java Tips.</p>
 					</div>
 				</div>
-
 			</article>
+	    <div class="well" >
+			        <p>Developed & Maintained by <a href="http://www.sudhakar.duraiswamy.in/" rel="author">Sudhakar Duraiswamy</a>.
+			        <br> 
+			        Built using <a href="http://www.oracle.com/technetwork/java/javaee/tech/index.html"> Jsp/Servlet  </a>,<a href="http://www.jquery.com/"> Jquery </a> and <a href="http://twitter.github.com/bootstrap"> Bootstrap </a> and powered by <a href="appengine.google.com">Google Apps Engine</a>.</p>	    
+	    </div>			
 
 		<!-- Feedback form -->
 		<div id="dialog-form" title="Feedback Form">
@@ -110,14 +114,17 @@
 </script>
 <script type="text/javascript" src="js/feedback.js"></script>
 	</body>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<script type="text/javascript">
 
-  ga('create', 'UA-39788980-2', 'twittereffectivejava.appspot.com');
-  ga('send', 'pageview');
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-39831824-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 
 </script>	
 </html>
