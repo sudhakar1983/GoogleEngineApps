@@ -24,12 +24,14 @@
 
 <body>
   <div class="container">
+  		<a href='<c:url value="../zap"></c:url>'  style="text-decoration: none;">
         <header class="hero-unit">
 			<h1>Welcome to ZAP url shortener</h1>
 			<div class="span5 offset3">
 				 <h5 class="text-warning">...the place to zap your long urls.</h5>     
 			</div>
-        </header> 
+        </header>
+       	</a> 
         <c:if test="${empty zaperror }">
         	<h4 class="text-info">This is bad ..Something terrible happened...</h4>
         </c:if>
@@ -50,7 +52,7 @@
 
     <footer>
       <div class="container" style="margin-top: 50px;">
-        <p>Developed & Maintained by <a href="http://www.sudhakar.duraiswamy.in/" rel="author">Sudhakar Duraiswamy</a>.
+        <p>Developed & Maintained by <a href="http://www.sudhakarduraiswamy.in/" rel="author">Sudhakar Duraiswamy</a>.
         <br> 
          Built using <a href="http://www.springsource.org/"> Spring </a>,<a href="http://www.jquery.com/"> Jquery </a> and <a href="http://twitter.github.com/bootstrap"> Bootstrap </a> and powered by <a href="appengine.google.com">Google Apps Engine</a>.</p>
       </div>

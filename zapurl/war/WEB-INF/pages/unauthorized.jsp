@@ -46,13 +46,14 @@
 <body>
 <div id="wrap">
   <div class="container">
+  		<a href='<c:url value="../zap"></c:url>'  style="text-decoration: none;">
         <header class="hero-unit">
 			<h1>TrimUrl</h1>
 			<div class="span5 offset1">
 				 <h5 class="text-warning">...the place to shorten your long urls.</h5>     
 			</div>
         </header>  
-			
+		</a>
 
 		<c:if test="${not empty zaperror.errors }">
 		<div class="well" style="width: 80%; text-align:center;font-size: 20px; font-weight: bold;" >
@@ -111,7 +112,7 @@
 
     <footer>
       <div class="container" style="margin-top: 50px;">
-        <p>Developed & Maintained by <a href="http://www.sudhakar.duraiswamy.in/" rel="author">Sudhakar Duraiswamy</a>.
+        <p>Developed & Maintained by <a href="http://www.sudhakarduraiswamy.in/" rel="author">Sudhakar Duraiswamy</a>.
         <br> 
          Built using <a href="http://www.springsource.org/"> Spring </a>,<a href="http://www.jquery.com/"> Jquery </a> and <a href="http://twitter.github.com/bootstrap"> Bootstrap </a> and powered by <a href="appengine.google.com">Google Apps Engine</a>.</p>
       </div>
