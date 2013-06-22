@@ -95,7 +95,7 @@ public class TwitterPushServlet  extends HttpServlet {
 						StringBuilder javatip = new StringBuilder();
 						javatip.append(note.getTitle().replace("<br>", " \n "));			
 						javatip.append("More on :"+" www.sudhakar.duraiswamy/notes?id="+note.getId());
-						javatip.append("#Effective_Java");				
+						javatip.append("  #Effective_Java");				
 						logger.log(Level.INFO, "Jave Tip Send out "+javatip);
 						
 						twitter.updateStatus(javatip.toString());

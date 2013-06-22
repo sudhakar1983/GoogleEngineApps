@@ -36,8 +36,9 @@ public class NoteSetup extends HttpServlet{
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		PrintWriter pw = resp.getWriter();
-		pw.write("Setup Get not supported");
+/*		PrintWriter pw = resp.getWriter();
+		pw.write("Setup Get not supported");*/
+		req.getRequestDispatcher("setup.jsp").forward(req, resp);
 	}
 	
 	/* (non-Javadoc)
@@ -78,8 +79,10 @@ public class NoteSetup extends HttpServlet{
 			
 		}
 		
-		PrintWriter writer = resp.getWriter();  	    
-		writer.write("inserted:\n");  
+		req.setAttribute("result", true);
+		req.getRequestDispatcher("setup.jsp").forward(req, resp);
+/*		PrintWriter writer = resp.getWriter();  	    
+		writer.write("inserted:\n"); */ 
 
 	}
 }

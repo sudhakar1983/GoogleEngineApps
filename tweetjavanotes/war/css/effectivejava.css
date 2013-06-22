@@ -14,7 +14,11 @@
     display:none;
     text-indent:-9999px;
     background: url('../img/icon-top.png') no-repeat;
-} 
+}
+
+.makelink{
+	cursor: hand; cursor: pointer;
+}
  
 body {
 	width: 100%;

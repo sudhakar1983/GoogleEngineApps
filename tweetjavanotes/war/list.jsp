@@ -96,7 +96,20 @@
 	    <div class="well" style="width:70%;margin-left:150px;margin-top: 20px;">
 			        <p>Developed & Maintained by <a href="http://www.sudhakar.duraiswamy.in/" rel="author">Sudhakar Duraiswamy</a>.
 			        <br> 
-			        Built using <a href="http://www.oracle.com/technetwork/java/javaee/tech/index.html"> Jsp/Servlet  </a>,<a href="http://www.jquery.com/"> Jquery </a> and <a href="http://twitter.github.com/bootstrap"> Bootstrap </a> and powered by <a href="appengine.google.com">Google Apps Engine</a>.</p>	    
+			        Built using<br/><br/> 
+			        
+			        	<strong>Frontend :</strong>
+			        	<ul>
+			        		<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/index.html"> Jsp/Jstl  </a></li>
+			        		<li><a href="http://www.jquery.com/"> Jquery </a></li>
+			        		<li><a href="http://twitter.github.com/bootstrap"> Bootstrap </a></li>
+			        	</ul>
+			        	
+			        	<strong>Backend powered by :</strong>
+			        	<ul>
+			        		<li> <a href="appengine.google.com">Google Apps Engine (Java)</a></li>
+			        	</ul>			        	
+    
 	    </div>
 	</div>
 
@@ -105,23 +118,35 @@
 			
 	<div class="notes">
 	
-		<div class='' style="float:left;margin-top:10px;margin-left:60%;height:50px;">
+		<div class='' style="float:left;margin-top:10px;margin-left:40%;height:50px;">
+		
+			<a class='btn btn-info' href="setup"><i class='icon-file icon-white'></i> Wanna Contribute ?</a>	
+			&nbsp;
 			<div class="btn btn-info" id="collapseall"><i class='icon-book icon-white'></i>Collapse All</div>			
-			&nbsp;&nbsp;
+			&nbsp;
 			<div class="btn btn-success" id="expandall"><i class='icon-book icon-white'></i>Expand All</div>			
 		</div>
 		<div style="margin:0px;float:left;width:inherit;">
 		<c:forEach items="${notes }" var="note">
 			<div class="notesection" >
+				
 				<div class="notetitle" id="${note.id }"><a href="#${note.id}" class="notelink" id="${note.id }">	${note.title }</a></div>							
 				<div class="description" id="des${note.id}"  <c:if test="${request_noteid == note.id }">style="display:block;"</c:if>>
+					<br/>
+					<div class="btn btn-large" id="collapseall">
+						<i class='icon-edit icon-black'></i>
+						<a href="edit?id=${note.id}">Edit</a>
+					</div>
+					<br/><br/>
 					<c:out value="${note.description.value }" escapeXml="false" />									
 				</div>
 			</div>			
 		</c:forEach>
 		</div>
 	</div>
-	<a href="#" class="scrollup" style="width: 120px; height: 120px;">Scroll</a>
+	
+	<div href="#" class="scrollup makelink" style="width: 120px; height: 120px;">
+	</div>
 	
 	<div id="dialog-form" title="Feedback Form">
 		<form method="post" action="feedback" id="feedback-form">

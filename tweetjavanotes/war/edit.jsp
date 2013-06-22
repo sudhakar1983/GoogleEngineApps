@@ -1,8 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Effective Java Notes - Everyday Health Pill for Java Developers</title>
+<!-- Include required JS files -->
+<script type="text/javascript" src="js/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="js/syntaxhighlighter/shBrushJava.js"></script>
+
+
+<link href="js/syntaxhighlighter/shCoreEclipse.css" rel="stylesheet" type="text/css" />
+
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="css/effectivejava.css" />
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<link type="text/css" rel="stylesheet" href="css/jquery/jquery-ui.css" />
+
 
 <script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
@@ -40,15 +56,57 @@
 </head>
 <body>
 
-	<form method="post" action="edit">
-	<input type="password" name="pp" value="letusrock"/><br/>
-	<input type="hidden" name="noteid" value="${note.id}" />
-	<input type="text" name="order" value="${note.ord}" />
+<div class='container' style="margin-top:15%;">
+			
+	<div class='row'>
+		<div class='span4'>
+			<a class='btn btn-info' href="notes"><i class='icon-arrow-left icon-white'></i> Back to Front page</a>
+		</div>
+	</div>
+	
+	
+	<div class='' style="float:right;width:20%;margin-top:0px;margin-right:20px;word-wrap: break-word;">
+		<ul class="thumbnails">
+		  <li class="span5">
+		  	<a href="subscribe.jsp" style="text-decoration: none;">		    
+		      <img src="img/facebook.png" alt="Facebook" height="90px" width="90px">
+		      <img src="img/twitter.png" alt="Twitter" height="90px" width="90px">
+		      <img src="img/rss.png" alt="Rss" height="90px" width="90px">
+		    </a>
+		      <h3>
+		      <a class="btn btn-large btn-info" href="subscribe.jsp" style="margin-left:100px;margin-top:20px;">Subscribe</a>
+		      </h3>
+		  </li>
+		</ul> 			
+	</div>
 
-		Title :<input type="text" name="title" value="${note.title}"/> <br/>
-		description :<textarea rows="30" cols="80"  name="description" >${note.description.value }</textarea><br/>
-		<input type="submit" value="Submit" />
+
+
+	<form method="post" action="edit">
+	<input type="hidden" name="pp" value="letusrock"/><br/>
+	<input type="hidden" name="noteid" value="${note.id}" />
+	
+	  <fieldset class="offset1">
+	
+	    <label><h3>Note Order Id</h3></label>
+	    <input type="text" name="order" value="${note.ord}" />
+	    <span class="help-block">The order by which it will be displayed.</span>
+	    <br/>
+	    
+	    <label><h3>Title</h3></label>
+	    <input type="text" name="title" value="${note.title}"/> <br/>
+	    <br/>
+	    
+	    <label><h3>Description</h3></label>
+	   	<textarea rows="30" cols="80"  name="description" >${note.description.value }</textarea>    
+	    <br/>
+		
+		<br/>
+		<button class="btn btn-success btn-large" >Save</button>
+	</fieldset>
 	</form>
+</div>
+
 	
 	
 </body>
