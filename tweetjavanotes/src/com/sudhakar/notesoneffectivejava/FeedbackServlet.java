@@ -12,9 +12,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * The Class FeedbackServlet.
+ *  - send feedback via email.
+ * @author Sudhakar Duraiswamy
+ */
 @SuppressWarnings("serial")
 public class FeedbackServlet extends HttpServlet {
 
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {

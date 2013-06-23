@@ -11,11 +11,11 @@ import javax.persistence.Id;
 import com.google.appengine.api.datastore.Key;
 
 
+
 /**
  * The Class TwiJavaNotes.
  *
  * @author Sudhakar Duraiswamy
- * The Class TwiJavaNotes.
  */
 @Entity
 public class TwiJavaNotes {

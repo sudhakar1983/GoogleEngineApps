@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.sudhakar.notesoneffectivejava.model.Note;
 
 
+
 /**
  * The Class MyNotesOnEffective_JavaServlet.
- *
+ *	- display list of notes
  * @author Sudhakar Duraiswamy
- * The Class MyNotesOnEffective_JavaServlet.
  */
 @SuppressWarnings("serial")
 public class MyNotesOnEffective_JavaServlet extends HttpServlet {

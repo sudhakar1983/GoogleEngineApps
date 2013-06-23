@@ -15,14 +15,18 @@ import com.google.appengine.api.datastore.Text;
 import com.sudhakar.notesoneffectivejava.model.Note;
 
 
+
+
 /**
  * The Class EditNoteServlet.
+ * 
+ *  Edit Notes
+ *
+ * @author Sudhakar Duraiswamy
  */
 public class EditNoteServlet extends HttpServlet{
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5323257868886268447L;
 	/** The Constant logger. */
 	final static Logger logger = Logger.getLogger(EditNoteServlet.class.getName());

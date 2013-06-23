@@ -8,12 +8,11 @@ import javax.persistence.Id;
 
 import com.google.appengine.api.datastore.Text;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class Note.
  *
  * @author Sudhakar Duraiswamy
- * The Class Note.
  */
 @Entity
 public class Note {
@@ -33,6 +32,7 @@ public class Note {
 	@Column
 	private Text description;	
 	
+	/** The ord. */
 	@Column
 	private int ord;
 
@@ -94,10 +94,20 @@ public class Note {
 
 
 
+	/**
+	 * Gets the ord.
+	 *
+	 * @return the ord
+	 */
 	public int getOrd() {
 		return ord;
 	}
 
+	/**
+	 * Sets the ord.
+	 *
+	 * @param ord the new ord
+	 */
 	public void setOrd(int ord) {
 		this.ord = ord;
 	}

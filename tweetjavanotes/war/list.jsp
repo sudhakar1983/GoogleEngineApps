@@ -103,6 +103,7 @@
 			        		<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/index.html"> Jsp/Jstl  </a></li>
 			        		<li><a href="http://www.jquery.com/"> Jquery </a></li>
 			        		<li><a href="http://twitter.github.com/bootstrap"> Bootstrap </a></li>
+			        		<li><a href="www.tinymce.com"> TinyMCE </a></li>
 			        	</ul>
 			        	
 			        	<strong>Backend powered by :</strong>
@@ -133,10 +134,7 @@
 				<div class="notetitle" id="${note.id }"><a href="#${note.id}" class="notelink" id="${note.id }">	${note.title }</a></div>							
 				<div class="description" id="des${note.id}"  <c:if test="${request_noteid == note.id }">style="display:block;"</c:if>>
 					<br/>
-					<div class="btn btn-large" id="collapseall">
-						<i class='icon-edit icon-black'></i>
-						<a href="edit?id=${note.id}">Edit</a>
-					</div>
+					<a class='btn btn-warning' href="edit?id=${note.id}"><i class='icon-file icon-black'></i> Edit ?</a>
 					<br/><br/>
 					<c:out value="${note.description.value }" escapeXml="false" />									
 				</div>

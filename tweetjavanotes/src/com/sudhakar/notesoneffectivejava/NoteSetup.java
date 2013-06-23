@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import com.sudhakar.notesoneffectivejava.model.Note;
 
 /**
  * The Class NoteSetup.
+ *	- Create New notes 
  *
  * @author Sudhakar Duraiswamy
  * The Class NoteSetup.
@@ -33,7 +35,18 @@ public class NoteSetup extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+
+		//Key key = KeyFactory.createKey(TwiJavaNotes.class.getSimpleName(), "twitter");
+		EntityManager em =  EMF.getEntityManager();
+		try {
+			Query query =  em.createQuery("select count(note.title) from Note note");
+			Long maximumNumber  = (Long) query.getSingleResult();
+			
+			System.out.println("no of notes :"+maximumNumber);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 /*		PrintWriter pw = resp.getWriter();
 		pw.write("Setup Get not supported");*/

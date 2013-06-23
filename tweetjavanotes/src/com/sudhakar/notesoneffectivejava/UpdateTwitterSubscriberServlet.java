@@ -22,11 +22,13 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.sudhakar.notesoneffectivejava.model.TwiJavaNotes;
 
 
+
 /**
  * The Class UpdateTwitterSubscriberServlet.
  *
+ *  - keeps the datastore in-sync with  Twitter subscribers
+ *
  * @author Sudhakar Duraiswamy
- * The Class UpdateTwitterSubscriberServlet.
  */
 public class UpdateTwitterSubscriberServlet extends HttpServlet{
 

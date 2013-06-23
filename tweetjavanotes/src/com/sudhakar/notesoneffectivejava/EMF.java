@@ -5,11 +5,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 
+
 /**
  * The Class EMF.
  *
  * @author Sudhakar Duraiswamy
- * The Class EMF.
  */
 public final class EMF {
     

@@ -26,11 +26,12 @@ import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
 
 
+
 /**
  * The Class RssServlet.
  *
+ *  - data exposed as RSS.
  * @author Sudhakar Duraiswamy
- * The Class RssServlet.
  */
 @SuppressWarnings("serial")
 public class RssServlet  extends HttpServlet {

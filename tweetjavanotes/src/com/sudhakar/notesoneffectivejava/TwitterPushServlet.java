@@ -21,11 +21,13 @@ import com.sudhakar.notesoneffectivejava.model.Note;
 import com.sudhakar.notesoneffectivejava.model.TwiJavaNotes;
 
 
+
 /**
  * The Class TwitterPushServlet.
  *
+ *	- tweet java notes to Twitter
+ *
  * @author Sudhakar Duraiswamy
- * The Class TwitterPushServlet.
  */
 public class TwitterPushServlet  extends HttpServlet {
 	
@@ -57,6 +59,10 @@ public class TwitterPushServlet  extends HttpServlet {
 			EntityManager em =  EMF.getEntityManager();
 			TwiJavaNotes twitterNotes = null;
 			try {
+				Query maxCountQuery =  em.createQuery("select count(note.title) from Note note");
+				Long maxCount =  (Long) maxCountQuery.getSingleResult();
+				
+				
 				
 				twitterNotes = em.find(TwiJavaNotes.class, key);				
 				List<Long> subscriberIds = twitterNotes.getFollowers();
@@ -64,14 +70,14 @@ public class TwitterPushServlet  extends HttpServlet {
 				System.out.println("twitterNotes :"+twitterNotes);
 				
 				int javaNoteId = twitterNotes.getNextNoteId();
-				javaNoteId = (javaNoteId==0 || javaNoteId >= 60) ? 1 : javaNoteId+1;
+				javaNoteId = (javaNoteId==0 || javaNoteId >= maxCount) ? 1 : javaNoteId+1;
 				
 				
 				Note note = em.find(Note.class,javaNoteId);
 				System.out.println("Note for  :"+javaNoteId+ " is "+note);
 				while(null == note){					
 					
-					javaNoteId = (javaNoteId==0 || javaNoteId >= 60) ? 1 : javaNoteId+1;
+					javaNoteId = (javaNoteId==0 || javaNoteId >= maxCount) ? 1 : javaNoteId+1;
 					
 					try {
 						System.out.println("javaNoteId :"+javaNoteId);
