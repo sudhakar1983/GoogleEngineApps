@@ -70,14 +70,14 @@ public class TwitterPushServlet  extends HttpServlet {
 				System.out.println("twitterNotes :"+twitterNotes);
 				
 				int javaNoteId = twitterNotes.getNextNoteId();
-				javaNoteId = (javaNoteId==0 || javaNoteId >= maxCount) ? 1 : javaNoteId+1;
+				javaNoteId = (javaNoteId==0 || javaNoteId >= maxCount) ? 1 : javaNoteId;
 				
 				
 				Note note = em.find(Note.class,javaNoteId);
 				System.out.println("Note for  :"+javaNoteId+ " is "+note);
 				while(null == note){					
 					
-					javaNoteId = (javaNoteId==0 || javaNoteId >= maxCount) ? 1 : javaNoteId+1;
+					javaNoteId = (javaNoteId==0 || javaNoteId >= maxCount) ? 1 : javaNoteId;
 					
 					try {
 						System.out.println("javaNoteId :"+javaNoteId);
@@ -92,6 +92,7 @@ public class TwitterPushServlet  extends HttpServlet {
 					if(null != note){
 						System.out.println("Note found :"+note);
 						em.getTransaction().begin();
+						javaNoteId = (javaNoteId==0 || javaNoteId >= maxCount) ? 1 : javaNoteId +1;
 						twitterNotes.setNextNoteId(javaNoteId);
 						em.persist(twitterNotes);
 						em.getTransaction().commit();
